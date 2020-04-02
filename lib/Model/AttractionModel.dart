@@ -1,6 +1,6 @@
 
 import 'dart:ffi';
-import 'Networking/AttractionNetworking.dart';
+import '../Networking/AttractionNetworking.dart';
 
 class AttractionModel {
   final int id;
@@ -18,13 +18,13 @@ class AttractionModel {
   factory AttractionModel.fromJson(Map<String, dynamic> json) {
       return AttractionModel (
         id: json['id'] as int,
-        name: json['name'] as String,
-        latitude: json["latitude"] as double,
-        longitude: json["longitude"] as double,
-        numReviews: json["num_reviews"] as int,
-        description: json["description"] as String,
-        address: json["adress"] as String,
-        email: json["email"] as String
+        name: json['name'] ?? "",
+        latitude: double.parse(json["longitude"] ?? "0"),
+        longitude: double.parse(json["longitude"] ?? "0"),
+        numReviews: int.parse(json["num_reviews"] ?? '0'),
+        description: json["description"] ?? "",
+        address: json["adress"] ?? "",
+        email: json["email"] ?? ""
       );
   }
 }

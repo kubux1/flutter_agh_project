@@ -6,23 +6,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class AttractionNetworking {
 
-  Future<http.Response> fetchAttraction(http.Client client) async {
-    var url = "https://tripadvisor1.p.rapidapi.com/attractions/list";
+  Future<List<AttractionModel>> fetchAttractions(http.Client client) async {
+    var url = "https://tripadvisor1.p.rapidapi.com/attractions/list?location_id=293928";
     var key = "996cAicWvnmshdNtgDog4ZQCMhe4p1R2OOljsne0ZBmON1Gqut";
 
-    return await client.get(url, headers: {
+    final response = await client.get(url, headers: {
       "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-      "x-rapidapi-key": "996cAicWvnmshdNtgDog4ZQCMhe4p1R2OOljsne0ZBmON1Gqut"
+      "x-rapidapi-key": key
     });
+
+    return compute(parseAttractions, response.body);
 
   }
 
-  Future<List<AttractionModel>> parsePhotos(String responseBody) {
-    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+  List<AttractionModel> parseAttractions(String responseBody) {
+    var data = json.decode(responseBody);
+    var parsed = data["data"] as List;
 
     return parsed.map<AttractionModel>((json) => AttractionModel.fromJson(json)).toList();
   }
-
-}
