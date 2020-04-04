@@ -43,6 +43,6 @@ Future<List<LocationModel>> loadLocations() async {
 
 
   List<LocationModel> locations = await locationList.map<LocationModel>((json) => LocationModel.fromJson(json)).toList();
-
+  print(locations[0].name);
   return locations;
 }
