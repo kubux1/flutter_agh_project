@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
   Future<List<AttractionModel>> fetchAttractions(http.Client client) async {
     var url = "https://tripadvisor1.p.rapidapi.com/attractions/list?location_id=293928";
-    var key = "996cAicWvnmshdNtgDog4ZQCMhe4p1R2OOljsne0ZBmON1Gqut";
+    var key = "";
 
     final response = await client.get(url, headers: {
       "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
@@ -26,3 +26,4 @@ import 'package:http/http.dart' as http;
 
     return parsed.map<AttractionModel>((json) => AttractionModel.fromJson(json)).toList();
   }
+

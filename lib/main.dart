@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:touristadvisor/Model/AttractionModel.dart';
+import 'package:touristadvisor/Model/LocationModel.dart';
 import 'Networking/AttractionNetworking.dart';
 import 'package:http/http.dart' as http;
 void main() {
   runApp(MyApp());
+  loadLocations();
 }
 
 class MyApp extends StatelessWidget {
@@ -32,6 +37,8 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
+
+//  var response = jsonDecode(await new File('assets/data.json').readAsString());
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -42,7 +49,6 @@ class MyHomePage extends StatelessWidget {
   // always marked "final".
 
   final String title;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +79,7 @@ class AttractionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(itemCount: attractions.length,
+    return ListView.builder(itemCount: 0,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
            title: Text(attractions[index].name),
