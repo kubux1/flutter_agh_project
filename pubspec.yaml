@@ -23,6 +23,7 @@ dependencies:
   grouped_buttons: ^1.0.3
   moor:
   moor_ffi:
+  provider:
   path_provider:
   path:
 

@@ -11,6 +11,7 @@ class LocationModel {
   final double distance;
   final double rating;
   final bool isClosed;
+  bool isFavourite = false;
 
   LocationModel({this.id, this.name, this.distance, this.rating, this.isClosed});
 

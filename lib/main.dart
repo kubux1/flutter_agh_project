@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:touristadvisor/AttractionDetails.dart';
+import 'package:touristadvisor/Favourites/FavouritesDB.dart';
+import 'Favourites/Favourites.dart';
 import 'LocationsSearchBar.dart';
 import 'LocationsSearchBarFilter.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+      Provider<FavouritesDB>(
+        create: (context) => FavouritesDB(),
+        child: MyApp(),
+        dispose: (context, db) => db.close(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,18 +28,19 @@ class MyApp extends StatelessWidget {
       ),
       home: DefaultTabController(
           // The number of tabs / content sections we need to display
-          length: 2,
+          length: 3,
           child: Scaffold(
             appBar: AppBar(
               bottom: TabBar(tabs: [
                 Tab(icon: Icon(Icons.search)),
-                Tab(icon: Icon(Icons.filter_list))
+                Tab(icon: Icon(Icons.filter_list)),
+                Tab(icon: Icon(Icons.favorite))
               ]),
               title: Text("Location Advisor"),
             ),
             body: TabBarView(
 //                children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
-                  children: [LocationsSearchBar(), AttractionDetails()]),
+                  children: [LocationsSearchBar(), AttractionDetails(), Favourites()]),
           )),
     );
   }

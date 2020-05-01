@@ -23,6 +23,16 @@ class FavouritesDB extends _$FavouritesDB {
 
   Stream<List<FavouriteAttraction>> get watchFavouriteAttractions =>
       select(favouriteAttractions).watch();
+
+  Future<int> addFavouriteAttraction(FavouriteAttraction attraction) =>
+      into(favouriteAttractions).insert(attraction);
+
+  Future deleteFavouriteAttraction(int favouriteAttractionId) =>
+      (delete(favouriteAttractions)
+            ..where((e) => e.attractionId.equals(favouriteAttractionId)))
+          .go();
+
+  Future deleteAllFavouriteAttractions() => (delete(favouriteAttractions)).go();
 }
 
 LazyDatabase _openConnection() {
