@@ -82,10 +82,12 @@ class AttractionDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Padding(
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Attraction Name"),
+        ),
+        body: SafeArea(
+          child: Padding(
             padding: EdgeInsets.all(15),
           child: Center(
             child: Column(

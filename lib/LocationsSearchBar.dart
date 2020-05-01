@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'Model/LocationModel.dart';
+import 'package:touristadvisor/AttractionDetails.dart';
 
 class LocationsSearchBar extends StatelessWidget {
   static int kmRadius = 1;
@@ -11,13 +12,12 @@ class LocationsSearchBar extends StatelessWidget {
     return locations;
   }
 
-  onLocationTap(LocationModel location) {
-//    GOTO AttractionDetails()
+  onLocationTap(LocationModel location, BuildContext context) {
     print(location.toString() + kmRadius.toString());
-  }
-
-  onAddToFavouritesPressed(LocationModel location){
-    print(location.toString() + kmRadius.toString());
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AttractionDetails())
+    );
   }
 
   static onCheckBoxSelected(List<String> selectedParams) {
@@ -41,11 +41,7 @@ class LocationsSearchBar extends StatelessWidget {
             return ListTile(
               title: Text(location.name),
               subtitle: Text(location.rating.toString()),
-              trailing: IconButton(
-                icon: Icon(Icons.favorite),
-                onPressed: () => onAddToFavouritesPressed(location),
-              ),
-              onTap: () => onLocationTap(location),
+              onTap: () => onLocationTap(location, context),
             );
           },
           loader: Text("Searching..."),

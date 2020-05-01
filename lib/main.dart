@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp(   // There should be only one MaterialApp in the project
       debugShowCheckedModeBanner: false,
       title: 'LocationAdvisor',
       theme: ThemeData(
@@ -39,8 +39,7 @@ class MyApp extends StatelessWidget {
               title: Text("Location Advisor"),
             ),
             body: TabBarView(
-//                children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
-                  children: [LocationsSearchBar(), AttractionDetails(), Favourites()]),
+                children: [LocationsSearchBar(), LocationsSearchBarFilter(), Favourites()]),
           )),
     );
   }
