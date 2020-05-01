@@ -12,6 +12,7 @@ class LocationsSearchBar extends StatelessWidget {
   }
 
   onLocationTap(LocationModel location) {
+//    GOTO AttractionDetails()
     print(location.toString() + kmRadius.toString());
   }
 

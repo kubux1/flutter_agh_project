@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:touristadvisor/AttractionDetails.dart';
 import 'LocationsSearchBar.dart';
 import 'LocationsSearchBarFilter.dart';
 
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
               title: Text("Location Advisor"),
             ),
             body: TabBarView(
-                children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
+//                children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
+                  children: [LocationsSearchBar(), AttractionDetails()]),
           )),
     );
   }

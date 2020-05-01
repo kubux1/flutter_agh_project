@@ -8,9 +8,11 @@ class AttractionModel {
   final double latitude;
   final double longitude;
   final int numReviews;
+//  add photo
   final String description;
   final String address;
   final String phoneNumber;
+//  add webpage
   final String email;
 
   AttractionModel({this.id, this.name, this.latitude, this.longitude, this.numReviews, this.description, this.address, this.phoneNumber, this.email});
