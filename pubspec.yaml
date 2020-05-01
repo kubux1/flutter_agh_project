@@ -21,6 +21,10 @@ dependencies:
     sdk: flutter
   flappy_search_bar: 1.7.2
   grouped_buttons: ^1.0.3
+  moor:
+  moor_ffi:
+  path_provider:
+  path:
 
 
 
@@ -32,6 +36,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  moor_generator:
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

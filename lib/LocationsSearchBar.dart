@@ -15,6 +15,10 @@ class LocationsSearchBar extends StatelessWidget {
     print(location.toString() + kmRadius.toString());
   }
 
+  onAddToFavouritesPressed(LocationModel location){
+    print(location.toString() + kmRadius.toString());
+  }
+
   static onCheckBoxSelected(List<String> selectedParams) {
     checkedBoxes = selectedParams;
   }
@@ -36,6 +40,10 @@ class LocationsSearchBar extends StatelessWidget {
             return ListTile(
               title: Text(location.name),
               subtitle: Text(location.rating.toString()),
+              trailing: IconButton(
+                icon: Icon(Icons.favorite),
+                onPressed: () => onAddToFavouritesPressed(location),
+              ),
               onTap: () => onLocationTap(location),
             );
           },
