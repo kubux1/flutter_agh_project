@@ -1,0 +1,9 @@
+{
+  "@@last_modified": "2020-05-02T13:05:37.177857",
+  "title": "Location Advisor",
+  "@title": {
+    "description": "Title for the Demo application",
+    "type": "text",
+    "placeholders": {}
+  }
+}
