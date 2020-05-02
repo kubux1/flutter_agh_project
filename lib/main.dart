@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:touristadvisor/AttractionDetails.dart';
-import 'package:touristadvisor/Favourites/FavouritesDB.dart';
-import 'Favourites/Favourites.dart';
+import 'package:touristadvisor/Favorites/FavoritesDB.dart';
+import 'Favorites/Favorites.dart';
 import 'LocationsSearchBar.dart';
 import 'LocationsSearchBarFilter.dart';
 
 void main() {
   runApp(
-      Provider<FavouritesDB>(
-        create: (context) => FavouritesDB(),
+      Provider<FavoritesDB>(
+        create: (context) => FavoritesDB(),
         child: MyApp(),
         dispose: (context, db) => db.close(),
       )

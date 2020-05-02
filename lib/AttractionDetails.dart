@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'Model/AttractionModel.dart';
+import 'package:touristadvisor/Favorites/FavoriteWidget.dart';
 
 // ignore: must_be_immutable
 class AttractionDetails extends StatelessWidget {
@@ -13,7 +13,7 @@ class AttractionDetails extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.bold, fontSize: 20
               ))),
-          Icon(Icons.favorite_border, size: 40)
+          FavoriteWidget()
         ])
   );
 

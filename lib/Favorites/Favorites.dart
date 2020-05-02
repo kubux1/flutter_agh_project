@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'FavouritesDB.dart';
+import 'FavoritesDB.dart';
 
 class Favourites extends StatelessWidget{
 
@@ -13,10 +13,10 @@ class Favourites extends StatelessWidget{
   }
 
   Widget _myListView(BuildContext context) {
-    final db = Provider.of<FavouritesDB>(context);
+    final db = Provider.of<FavoritesDB>(context);
     return StreamBuilder(
-      stream: db.watchFavouriteAttractions,
-      builder: (BuildContext context, AsyncSnapshot<List<FavouriteAttraction>> snapshot){
+      stream: db.favoriteAttractionsDao.watchAll,
+      builder: (BuildContext context, AsyncSnapshot<List<FavoriteAttraction>> snapshot){
         if(!snapshot.hasData){
           return Text("error");
         }else{
@@ -24,7 +24,7 @@ class Favourites extends StatelessWidget{
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(snapshot.data[index].attractionId.toString()),
+                title: Text(snapshot.data[index].name.toString()),
               );
             },
           );
