@@ -19,7 +19,7 @@
 	"airports": "Lotniska",
 	"attractions": "Atrakcje",
 	"errorOccurred": "Wystąpił błąd: {error}",
-	"hotels": "hotele",
+	"hotels": "Hotele",
 	"noResultsFound": "Nie znaleziono wyników",
 	"radius": "Promień {rad} km",
 	"searching": "Wyszukiwanie...",
