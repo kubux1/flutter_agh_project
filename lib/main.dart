@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
 import 'LocationsSearchBar.dart';
 import 'LocationsSearchBarFilter.dart';
+import 'package:touristadvisor/AttractionDetails.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'I18n.dart';
 
-void main() {
-  runApp(MyApp());
+class DefaultTabControllerApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      // The number of tabs / content sections we need to display
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(tabs: [
+              Tab(icon: Icon(Icons.search)),
+              Tab(icon: Icon(Icons.filter_list))
+            ]),
+            title: Text(AdvisorLocalizations.of(context).title),
+          ),
+          body: TabBarView(
+                            children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
+//              children: [
+//                LocationsSearchBar(),
+//                AttractionDetails()
+//              ]
+//          ),
+        ));
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -11,24 +35,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LocationAdvisor',
+      localizationsDelegates: [
+        const AdvisorLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''),
+        const Locale('pl', ''),
+      ],
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DefaultTabController(
-          // The number of tabs / content sections we need to display
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              bottom: TabBar(tabs: [
-                Tab(icon: Icon(Icons.search)),
-                Tab(icon: Icon(Icons.filter_list))
-              ]),
-              title: Text("Location Advisor"),
-            ),
-            body: TabBarView(
-                children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
-          )),
+      home: DefaultTabControllerApp(),
     );
   }
+}
+
+void main() {
+  runApp(MyApp());
 }
