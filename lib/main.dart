@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:touristadvisor/AttractionDetails.dart';
 import 'LocationsSearchBar.dart';
 import 'LocationsSearchBarFilter.dart';
-
+import 'package:touristadvisor/AttractionDetails.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'I18n.dart';
 
@@ -21,12 +20,12 @@ class DefaultTabControllerApp extends StatelessWidget {
             title: Text(AdvisorLocalizations.of(context).title),
           ),
           body: TabBarView(
-            //                children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
-              children: [
-                LocationsSearchBar(),
-                AttractionDetails()
-              ]
-          ),
+                            children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
+//              children: [
+//                LocationsSearchBar(),
+//                AttractionDetails()
+//              ]
+//          ),
         ));
   }
 }
