@@ -21,6 +21,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "locationsSearchBarHintText" : MessageLookupByLibrary.simpleMessage("Nazwy miast, regionów, miejsc, itd."),
+    "restaurants" : MessageLookupByLibrary.simpleMessage("Restauracje"),
     "title" : MessageLookupByLibrary.simpleMessage("Doradzacz podróży")
   };
 }

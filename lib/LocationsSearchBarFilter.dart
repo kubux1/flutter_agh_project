@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
+import 'I18n.dart';
 import 'LocationsSearchBar.dart';
 
 class LocationsSearchBarFilter extends StatefulWidget {
@@ -38,7 +39,7 @@ class SliderExampleState extends State with AutomaticKeepAliveClientMixin {
           Text("Radius " + _kmRadius.toString() + " km"),
           CheckboxGroup(
             labels: <String>[
-              "Restaurants",
+              AdvisorLocalizations.of(context).restaurants,
               "Attractions",
               "Hotels",
               "Airports"

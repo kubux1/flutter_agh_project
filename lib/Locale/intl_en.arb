@@ -1,0 +1,19 @@
+{
+  "title": "Location Advisor",
+  "@title": {
+    "description": "Title for the Demo application",
+    "type": "text"
+  },
+  "restaurants": "Restaurants",
+  "@restaurants": {
+    "description": "Restaurants",
+    "type": "text",
+    "placeholders": {}
+  },
+  "locationsSearchBarHintText": "Name of cities, districts, places, etc…",
+  "@locationsSearchBarHintText": {
+    "description": "Name of cities, districts, places, etc…",
+    "type": "text",
+    "placeholders": {}
+  }
+}

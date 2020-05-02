@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
+import 'I18n.dart';
 import 'Model/LocationModel.dart';
 
 class LocationsSearchBar extends StatelessWidget {
@@ -31,7 +32,7 @@ class LocationsSearchBar extends StatelessWidget {
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SearchBar<LocationModel>(
-          hintText: "Name of cities, districts, places, etc…",
+          hintText: AdvisorLocalizations.of(context).locationsSearchBarHintText,
           onSearch: search,
           onItemFound: (LocationModel location, int index) {
             return ListTile(
