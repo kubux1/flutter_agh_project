@@ -36,13 +36,14 @@ class SliderExampleState extends State with AutomaticKeepAliveClientMixin {
               });
             },
           ),
-          Text("Radius " + _kmRadius.toString() + " km"),
+//          Text("Radius " + _kmRadius.toString() + " km"),
+          Text(AdvisorLocalizations.of(context).radius(_kmRadius.toString())),
           CheckboxGroup(
             labels: <String>[
               AdvisorLocalizations.of(context).restaurants,
-              "Attractions",
-              "Hotels",
-              "Airports"
+              AdvisorLocalizations.of(context).attractions,
+              AdvisorLocalizations.of(context).hotels,
+              AdvisorLocalizations.of(context).airports
             ],
             onSelected: LocationsSearchBar.onCheckBoxSelected,
           ),

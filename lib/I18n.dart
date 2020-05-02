@@ -54,14 +54,91 @@ class AdvisorLocalizations {
     );
   }
 
-  String get locationsSearchBarHintText {
+   String get locationsSearchBarHintText {
+     return Intl.message(
+       'Name of cities, districts, places, etc…',
+       name: 'locationsSearchBarHintText',
+       desc: 'Name of cities, districts, places, etc…',
+       locale: localeName,
+     );
+   }
+
+  String get attractions {
     return Intl.message(
-      'Name of cities, districts, places, etc…',
-      name: 'locationsSearchBarHintText',
-      desc: 'Name of cities, districts, places, etc…',
+      'Attractions',
+      name: 'attractions',
+      desc: 'Attractions',
       locale: localeName,
     );
   }
+
+  String get hotels {
+    return Intl.message(
+      'Hotels',
+      name: 'hotels',
+      desc: 'Hotels',
+      locale: localeName,
+    );
+  }
+
+  String get airports {
+    return Intl.message(
+      'Airports',
+      name: 'airports',
+      desc: 'airports',
+      locale: localeName,
+    );
+  }
+  
+  String get searching {
+    return Intl.message(
+      'Searching...',
+      name: 'searching',
+      desc: 'searching',
+      locale: localeName,
+    );
+  }
+
+  String get noResultsFound {
+    return Intl.message(
+      'No results found',
+      name: 'noResultsFound',
+      desc: 'noresultsfound',
+      locale: localeName,
+    );
+  }
+
+  String get attractionName {
+    return Intl.message(
+      'Matthias Church',
+      name: 'attractionName',
+      locale: localeName,
+    );
+  }
+
+  String get attractionDescription {
+    return Intl.message(
+      'Used over the centuries as a coronation church for the Hungarian kings, the slender and graceful architecture of this beautiful church dominates the main square of the Castle area.',
+      name: 'attractionDescription',
+      locale: localeName,
+    );
+  }
+
+  String errorOccurred(error) => Intl.message(
+      'Error occurred : $error',
+      name: 'errorOccurred',
+      args: [error],
+      desc: 'Print error message',
+      locale: localeName,
+      );
+
+  String radius(rad) => Intl.message(
+      'Radius $rad km',
+      name: 'radius',
+      args: [rad],
+      desc: 'radius',
+      locale: localeName,
+      );
 
 
 

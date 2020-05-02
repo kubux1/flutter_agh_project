@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-05-02T16:13:58.722649",
+  "@@last_modified": "2020-05-02T17:45:20.572185",
   "title": "Location Advisor",
   "@title": {
     "description": "Title for the Demo application",
@@ -17,5 +17,61 @@
     "description": "Name of cities, districts, places, etc…",
     "type": "text",
     "placeholders": {}
+  },
+  "attractions": "Attractions",
+  "@attractions": {
+    "description": "Attractions",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hotels": "Hotels",
+  "@hotels": {
+    "description": "Hotels",
+    "type": "text",
+    "placeholders": {}
+  },
+  "airports": "Airports",
+  "@airports": {
+    "description": "airports",
+    "type": "text",
+    "placeholders": {}
+  },
+  "searching": "Searching...",
+  "@searching": {
+    "description": "searching",
+    "type": "text",
+    "placeholders": {}
+  },
+  "noResultsFound": "No results found",
+  "@noResultsFound": {
+    "description": "noresultsfound",
+    "type": "text",
+    "placeholders": {}
+  },
+  "attractionName": "Matthias Church",
+  "@attractionName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "attractionDescription": "Used over the centuries as a coronation church for the Hungarian kings, the slender and graceful architecture of this beautiful church dominates the main square of the Castle area.",
+  "@attractionDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorOccurred": "Error occurred : {error}",
+  "@errorOccurred": {
+    "description": "Print error message",
+    "type": "text",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "radius": "Radius {rad} km",
+  "@radius": {
+    "description": "radius",
+    "type": "text",
+    "placeholders": {
+      "rad": {}
+    }
   }
 }
