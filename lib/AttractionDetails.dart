@@ -85,6 +85,9 @@ class AttractionDetails extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          title: Text("Location Advisor")
+        ),
         body: Padding(
             padding: EdgeInsets.all(15),
           child: Center(
