@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'I18n.dart';
 import 'Model/AttractionModel.dart';
 
 // ignore: must_be_immutable
 class AttractionDetails extends StatelessWidget {
-
-  Widget titleSection = Container(
+  Widget titleSection(attractionName) => Container(
     padding: const EdgeInsets.symmetric(vertical: 5),
     child: Row(
         children: <Widget>[
-          Expanded(child: Text('Matthias Church',
+          Expanded(child: Text(attractionName,
               style: TextStyle(
                   fontWeight: FontWeight.bold, fontSize: 20
               ))),
@@ -37,10 +37,10 @@ class AttractionDetails extends StatelessWidget {
     child: Image.network('https://media-cdn.tripadvisor.com/media/photo-s/08/c2/f8/f2/bucket-list-de-budapeste.jpg')
   );
 
-  Widget descriptionSection = Container(
+  Widget descriptionSection(descriptionText) => Container(
     padding: const EdgeInsets.symmetric(vertical: 10),
     child: Text(
-      'Used over the centuries as a coronation church for the Hungarian kings, the slender and graceful architecture of this beautiful church dominates the main square of the Castle area.',
+      descriptionText,
       softWrap: true,
     ),
   );
@@ -92,10 +92,10 @@ class AttractionDetails extends StatelessWidget {
           child: Center(
             child: Column(
               children: <Widget>[
-                titleSection,
+                titleSection(AdvisorLocalizations.of(context).attractionName),
                 ratingSection,
                 imageSection,
-                descriptionSection,
+                descriptionSection(AdvisorLocalizations.of(context).attractionDescription),
                 contactSection
               ])),
         )),
