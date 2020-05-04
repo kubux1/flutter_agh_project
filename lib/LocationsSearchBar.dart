@@ -15,9 +15,10 @@ class LocationsSearchBar extends StatelessWidget {
   }
 
   onLocationTap(LocationModel location, BuildContext context) {
+    print(location.toString() + kmRadius.toString());
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AttractionDetails()),
+      MaterialPageRoute(builder: (context) => AttractionDetails())
     );
   }
 

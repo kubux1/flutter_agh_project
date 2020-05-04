@@ -17,12 +17,13 @@ class SliderExampleState extends State with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          body: Padding(
-        padding: EdgeInsets.all(5),
-        child: Center(
+    return Scaffold(
+        body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(5),
+          child: Center(
             child: Column(children: [
           Slider(
             value: _kmRadius.toDouble(),
@@ -48,7 +49,6 @@ class SliderExampleState extends State with AutomaticKeepAliveClientMixin {
             onSelected: LocationsSearchBar.onCheckBoxSelected,
           ),
         ])),
-      )),
-    );
+      )));
   }
 }
