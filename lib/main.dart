@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:touristadvisor/HotelDetails.dart';
 import 'LocationsSearchBar.dart';
 import 'LocationsSearchBarFilter.dart';
 import 'package:touristadvisor/AttractionDetails.dart';
@@ -20,7 +21,8 @@ class DefaultTabControllerApp extends StatelessWidget {
             title: Text(AdvisorLocalizations.of(context).title),
           ),
           body: TabBarView(
-                            children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
+//                            children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
+                            children: [LocationsSearchBar(), HotelDetails()]),
 //              children: [
 //                LocationsSearchBar(),
 //                AttractionDetails()

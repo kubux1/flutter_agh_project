@@ -14,13 +14,14 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flappy_search_bar: 1.7.2
   grouped_buttons: ^1.0.3
+  url_launcher: ^3.0.1
   flutter_localizations:
     sdk: flutter
 
