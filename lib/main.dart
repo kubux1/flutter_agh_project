@@ -21,8 +21,8 @@ class DefaultTabControllerApp extends StatelessWidget {
             title: Text(AdvisorLocalizations.of(context).title),
           ),
           body: TabBarView(
-//                            children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
-                            children: [LocationsSearchBar(), HotelDetails()]),
+                            children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
+//                            children: [LocationsSearchBar(), HotelDetails()]),
 //              children: [
 //                LocationsSearchBar(),
 //                AttractionDetails()

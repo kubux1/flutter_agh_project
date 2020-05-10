@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'I18n.dart';
 import 'Model/HotelModel.dart';
+import 'Networking/HotelNetworking.dart';
 
 class ExpandableText extends StatefulWidget {
   ExpandableText(this.text);
@@ -52,6 +55,9 @@ class HotelDetails extends StatefulWidget {
 class HotelDetailsState extends State<HotelDetails> {
   // example hotel model object for testing purposes only
   final HotelModel hotel = new HotelModel.example();
+
+//  static HttpClient client = new HttpClient();
+//  HotelModel hotel = fetchHotel(client, 'PLN', 'pl_PL', "2020-05-15", 277359) as HotelModel;
 
   List<Widget> _buildStars(double count) {
     var list = <Icon>[];
@@ -243,14 +249,10 @@ class HotelDetailsState extends State<HotelDetails> {
       )
   );
 
-
   Widget imageSection(url) => Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Image.network(url)
   );
-
-
-
 
   Widget descriptionSection(descriptionText) =>
       new ExpandText(
@@ -260,74 +262,33 @@ class HotelDetailsState extends State<HotelDetails> {
 //        arrowColor: Colors.lightBlueAccent,
       );
 
-  Widget priceAndStarSection(price, hotelClass) =>
-      Container(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child:  Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                    child: Row(
-                        children:
-                        <Widget>[
-                          new Icon(Icons.monetization_on, color: Colors.green,),
-                          SizedBox(width: 5),
-                          Text(price, style: TextStyle(fontWeight: FontWeight.bold)),
-                        ])
-                ),
+  Widget priceAndStarSection(price, hotelClass) => Container(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child:  Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+                child: Row(
+                    children:
+                    <Widget>[
+//                      new Icon(Icons.payment, color: Colors.redAccent,),
+                      new Icon(Icons.monetization_on, color: Colors.green,),
+                      SizedBox(width: 5),
+                      Text(price, style: TextStyle(fontWeight: FontWeight.bold)),
+                    ])
+            ),
 
-                Container(
-                    child: Row(
-                        children:
-                        <Widget>[
-                          new Icon(Icons.star, color: Colors.amber,),
-                          SizedBox(width: 5),
-                          Text("$hotelClass", style: TextStyle(fontWeight: FontWeight.bold)),
-                        ])
-                ),
-              ])
-      );
-//      ExpandableNotifier(  // <-- Provides ExpandableController to its children
-//        child: Column(
-//          children: [
-//            Expandable(           // <-- Driven by ExpandableController from ExpandableNotifier
-//              collapsed: ExpandableButton(  // <-- Expands when tapped on the cover photo
-//                child: Text(descriptionText, softWrap: true, textAlign: TextAlign.justify, maxLines: 2, overflow: TextOverflow.ellipsis,),
-//
-//              ),
-//              expanded: Column(
-//                  children: [
-//                    Text(descriptionText, softWrap: true, textAlign: TextAlign.justify ),
-//                    ExpandableButton(       // <-- Collapses when tapped on
-//                      child: FlatButton(
-//                        child: Text( 'back',
-//                          style: Theme.of(context)
-//                              .textTheme
-//                              .button
-//                              .copyWith(color: Colors.deepPurple, backgroundColor: Colors.amber),
-//                        )
-//                      )
-//                      )
-//                  ]
-//              ),
-//            ),
-//          ],
-//        ),
-//      );
-
-//      ExpandablePanel(
-//        header: Container(
-//          padding: const EdgeInsets.symmetric(vertical: 12),
-//          child:  Row(
-//              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//              children: <Widget>[
-//                Text(price, style: TextStyle(fontWeight: FontWeight.bold)),
-//                Text("Description", style: TextStyle(fontWeight: FontWeight.bold)),
-//              ])
-//      ),
-//        collapsed:  Text(descriptionText, softWrap: true, textAlign: TextAlign.justify, maxLines: 2, overflow: TextOverflow.ellipsis),
-//        expanded:   Text(descriptionText, softWrap: true, textAlign: TextAlign.justify ),
-//      );
+            Container(
+                child: Row(
+                    children:
+                    <Widget>[
+                      new Icon(Icons.star, color: Colors.amber,),
+                      SizedBox(width: 5),
+                      Text("$hotelClass", style: TextStyle(fontWeight: FontWeight.bold)),
+                    ])
+            ),
+          ])
+    );
 
   bool favouritePressed = false;
   void pressFavorite() {favouritePressed = favouritePressed ? false : true;}
