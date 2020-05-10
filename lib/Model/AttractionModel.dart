@@ -1,8 +1,10 @@
 
 import 'dart:ffi';
 import '../Networking/AttractionNetworking.dart';
+import 'ILocationModel.dart';
 
 class AttractionModel {
+  final LocationType locationType = LocationType.attraction;
   final int id;
   final String name;
   final double latitude;

@@ -1,11 +1,10 @@
-
-import 'dart:ffi';
 import 'dart:math';
-import 'dart:convert' show json, jsonDecode;
+import 'dart:convert' show jsonDecode;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter/cupertino.dart';
 
-class LocationModel {
+import 'ILocationModel.dart';
+
+class LocationModel implements ILocationModel {
   final int id;
   final String name;
   final double distance;
@@ -30,7 +29,7 @@ Future<String> _loadLocationsAsset() async {
   return await rootBundle.loadString('assets/searchResponse.json');
 }
 
-Future<List<LocationModel>> loadLocations() async {
+Future<List<ILocationModel>> loadLocations() async {
 
   String jsonLocationsOverall = await _loadLocationsAsset();
   var data = jsonDecode(jsonLocationsOverall);

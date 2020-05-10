@@ -1,6 +1,8 @@
 
 import 'dart:ffi';
 
+import 'ILocationModel.dart';
+
 class HotelModel {
 //  final int location_id;
 //  final String name;
@@ -18,6 +20,7 @@ class HotelModel {
 //  final String address;
 //  final String email;
 
+  final LocationType locationType = LocationType.hotel;
   int location_id;
   String name;
   double latitude;

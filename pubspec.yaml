@@ -24,6 +24,8 @@ dependencies:
   url_launcher: ^3.0.1
   flutter_localizations:
     sdk: flutter
+  google_maps_flutter: ^0.5.27+1
+  permission_handler: 5.0.0+hotfix.5
 
   intl: any # Take the version from Flutter.
   intl_translation: any

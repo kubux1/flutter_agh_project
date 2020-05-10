@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:touristadvisor/HotelDetails.dart';
+import 'package:touristadvisor/LocationDetailView/AirportDetails.dart';
 import 'LocationsSearchBar.dart';
 import 'LocationsSearchBarFilter.dart';
 import 'package:touristadvisor/AttractionDetails.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'I18n.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DefaultTabControllerApp extends StatelessWidget {
+
+  _permissionGranted = await location.hasPermission();
+  if (_permissionGranted == PermissionStatus.denied) {
+  _permissionGranted = await location.requestPermission();
+  if (_permissionGranted != PermissionStatus.granted) {
+  return;
+  }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -22,7 +33,7 @@ class DefaultTabControllerApp extends StatelessWidget {
           ),
           body: TabBarView(
 //                            children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
-                            children: [LocationsSearchBar(), HotelDetails()]),
+                            children: [LocationsSearchBar(), AirportDetails()]),
 //              children: [
 //                LocationsSearchBar(),
 //                AttractionDetails()
@@ -55,5 +66,6 @@ class MyApp extends StatelessWidget {
 }
 
 void main() {
+
   runApp(MyApp());
 }
