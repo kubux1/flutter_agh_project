@@ -1,9 +1,47 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:expand_widget/expand_widget.dart';
 import 'I18n.dart';
 import 'Model/HotelModel.dart';
+
+class ExpandableText extends StatefulWidget {
+  ExpandableText(this.text);
+
+  final String text;
+  bool isExpanded = false;
+
+  @override
+  _ExpandableTextState createState() => new _ExpandableTextState();
+}
+
+class _ExpandableTextState extends State<ExpandableText>
+    with TickerProviderStateMixin<ExpandableText> {
+  @override
+  Widget build(BuildContext context) {
+    return new Column(children: <Widget>[
+      new AnimatedSize(
+          vsync: this,
+          duration: const Duration(milliseconds: 500),
+          child: new ConstrainedBox(
+              constraints: widget.isExpanded
+                  ? new BoxConstraints()
+                  : new BoxConstraints(maxHeight: 50.0),
+              child: new Text(
+                widget.text,
+                softWrap: true,
+                overflow: TextOverflow.fade,
+              ))),
+      widget.isExpanded
+          ? new ConstrainedBox(constraints: new BoxConstraints())
+          : new FlatButton(
+          child: const Text('...'),
+          onPressed: () => setState(() => widget.isExpanded = true))
+    ]);
+  }
+}
 
 // ignore: must_be_immutable
 class HotelDetails extends StatefulWidget {
@@ -15,37 +53,40 @@ class HotelDetailsState extends State<HotelDetails> {
   // example hotel model object for testing purposes only
   final HotelModel hotel = new HotelModel.example();
 
-  Widget titleSection(hotelName) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-          children: <Widget>[
-            Expanded(child: Text(hotelName,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20
-                ))),
-            Icon(Icons.favorite_border, size: 40)
-          ])
-  );
-
   List<Widget> _buildStars(double count) {
     var list = <Icon>[];
-    for (var i=0; i<count.floor(); i++){
-      list.add(Icon(Icons.star));
-    }
-    if (count - count.floorToDouble() != 0.0){
-      list.add(Icon(Icons.star_half));
+    var color = Colors.black87;
+    for (var star=1; star<=5; star++){
+      if(count >= star) {
+        list.add(Icon(Icons.star, color: color,));
+        continue;
+      }
+      else if(star - count == 0.5){
+        list.add(Icon(Icons.star_half, color: color));
+      }
+      else {
+        list.add(Icon(Icons.star_border, color: color));
+      }
     }
     return list;
   }
 
-  Widget ratingSection(rating, reviews) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+  Widget ratingSection(rating, reviews, priceLevel) => Container(
+      padding: const EdgeInsets.only(bottom: 8),
       child:  Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            ..._buildStars(rating),
-            SizedBox(width: 10),
-            Text(reviews),
-            Text(' Reviews')
+            Container(
+                child: Row(
+                    children:
+                    <Widget>[
+                      ..._buildStars(rating),
+                      SizedBox(width: 10),
+                      Text('$reviews Reviews'),
+                    ])
+            ),
+
+            Text(priceLevel, style: TextStyle(fontWeight: FontWeight.bold),)
           ])
   );
 
@@ -141,7 +182,7 @@ class HotelDetailsState extends State<HotelDetails> {
       overflow: TextOverflow.ellipsis,
       text: new TextSpan(
         text: linkText,
-        style: new TextStyle(color: Colors.blue),
+        style: new TextStyle(color: Colors.blueAccent),
         recognizer: new TapGestureRecognizer()
           ..onTap = () {
             if(lat != null && lon != null){
@@ -201,31 +242,95 @@ class HotelDetailsState extends State<HotelDetails> {
           ]
       )
   );
-  
+
 
   Widget imageSection(url) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Image.network(url)
   );
 
-  Widget descriptionSection(descriptionText) => Container(
-    padding: const EdgeInsets.symmetric(vertical: 10),
-    child: Text(
-      descriptionText,
-      softWrap: true,
-      textAlign: TextAlign.justify,
-    ),
-  );
+
+
+
+  Widget descriptionSection(descriptionText) =>
+      new ExpandText(
+        descriptionText,
+        textAlign: TextAlign.justify,
+        maxLength: 3,
+//        arrowColor: Colors.lightBlueAccent,
+      );
+
+  Widget priceAndStarSection(price, hotelClass) =>
+      Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child:  Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                    child: Row(
+                        children:
+                        <Widget>[
+                          new Icon(Icons.monetization_on, color: Colors.green,),
+                          SizedBox(width: 5),
+                          Text(price, style: TextStyle(fontWeight: FontWeight.bold)),
+                        ])
+                ),
+
+                Container(
+                    child: Row(
+                        children:
+                        <Widget>[
+                          new Icon(Icons.star, color: Colors.amber,),
+                          SizedBox(width: 5),
+                          Text("$hotelClass", style: TextStyle(fontWeight: FontWeight.bold)),
+                        ])
+                ),
+              ])
+      );
+//      ExpandableNotifier(  // <-- Provides ExpandableController to its children
+//        child: Column(
+//          children: [
+//            Expandable(           // <-- Driven by ExpandableController from ExpandableNotifier
+//              collapsed: ExpandableButton(  // <-- Expands when tapped on the cover photo
+//                child: Text(descriptionText, softWrap: true, textAlign: TextAlign.justify, maxLines: 2, overflow: TextOverflow.ellipsis,),
+//
+//              ),
+//              expanded: Column(
+//                  children: [
+//                    Text(descriptionText, softWrap: true, textAlign: TextAlign.justify ),
+//                    ExpandableButton(       // <-- Collapses when tapped on
+//                      child: FlatButton(
+//                        child: Text( 'back',
+//                          style: Theme.of(context)
+//                              .textTheme
+//                              .button
+//                              .copyWith(color: Colors.deepPurple, backgroundColor: Colors.amber),
+//                        )
+//                      )
+//                      )
+//                  ]
+//              ),
+//            ),
+//          ],
+//        ),
+//      );
+
+//      ExpandablePanel(
+//        header: Container(
+//          padding: const EdgeInsets.symmetric(vertical: 12),
+//          child:  Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//              children: <Widget>[
+//                Text(price, style: TextStyle(fontWeight: FontWeight.bold)),
+//                Text("Description", style: TextStyle(fontWeight: FontWeight.bold)),
+//              ])
+//      ),
+//        collapsed:  Text(descriptionText, softWrap: true, textAlign: TextAlign.justify, maxLines: 2, overflow: TextOverflow.ellipsis),
+//        expanded:   Text(descriptionText, softWrap: true, textAlign: TextAlign.justify ),
+//      );
 
   bool favouritePressed = false;
-
-  void pressFavorite()
-  {
-    if (favouritePressed)
-      favouritePressed = false;
-    else
-      favouritePressed = true;
-  }
+  void pressFavorite() {favouritePressed = favouritePressed ? false : true;}
 
   @override
   Widget build(BuildContext context) {
@@ -263,8 +368,9 @@ class HotelDetailsState extends State<HotelDetails> {
             child: Center(
                 child: Column(
                     children: <Widget>[
-                      ratingSection(hotel.rating, hotel.numReviews.toString()),
+                      ratingSection(hotel.rating, hotel.numReviews.toString(), hotel.priceLevel),
                       imageSection(hotel.photoUrl),
+                      priceAndStarSection(hotel.price, hotel.hotelClass),
                       descriptionSection(hotel.description),
                       contactSection(hotel.address, hotel.phone, hotel.website, hotel.email)
                     ])),

@@ -60,7 +60,7 @@ class HotelModel {
     latitude = 50.058437;
     longitude = 19.933285;
     numReviews = 3581;
-    rating = 4.5;
+    rating = 1.5;
     priceLevel = "\$\$";
     price = "\$87 - \$210";
     hotelClass = 5.0;
