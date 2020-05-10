@@ -124,6 +124,22 @@ class AdvisorLocalizations {
     );
   }
 
+  String get currency {
+    return Intl.message(
+      'USD',
+      name: 'currency',
+      locale: localeName,
+    );
+  }
+
+  String get locale_string {
+    return Intl.message(
+      'en_US',
+      name: 'locale_string',
+      locale: localeName,
+    );
+  }
+
   String errorOccurred(error) => Intl.message(
       'Error occurred : $error',
       name: 'errorOccurred',
