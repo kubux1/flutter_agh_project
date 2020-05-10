@@ -11,6 +11,7 @@ class LocationsSearchBar extends StatelessWidget {
 
   Future<List<LocationModel>> search(String search) async {
     Future<List<LocationModel>> locations = loadLocations();
+    //Future<List<LocationModel>> locations = fetchLocations(search);
     return locations;
   }
 

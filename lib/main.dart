@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touristadvisor/Networking/AttractionNetworking.dart';
+import 'package:touristadvisor/Networking/LocationNetworking.dart';
 import 'LocationsSearchBar.dart';
 import 'LocationsSearchBarFilter.dart';
 import 'package:touristadvisor/AttractionDetails.dart';
@@ -56,6 +57,4 @@ class MyApp extends StatelessWidget {
 void main() {
 
   runApp(MyApp());
-
-  print(fetchAttractions());
 }

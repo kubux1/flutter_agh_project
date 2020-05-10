@@ -35,7 +35,7 @@ class LocationModel {
         id: int.parse(json['location_id']),
         name: json['name'] ?? "",
         distance: (1.0 + 29.0 *Random().nextDouble()),
-        rating: double.parse(json['rating'] ?? 0.0),
+        rating: double.parse(json['rating'] ?? '0.0'),
         isClosed: json['is_closed'],
         category: CategoryModel.fromJson(json['category'])
     );
