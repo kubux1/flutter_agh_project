@@ -24,18 +24,25 @@ class MessageLookup extends MessageLookupByLibrary {
   static m1(rad) => "Promień ${rad} km";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static _notInlinedMessages(_) => <String, Function> {
-    "airports" : MessageLookupByLibrary.simpleMessage("Lotniska"),
-    "attractionDescription" : MessageLookupByLibrary.simpleMessage("Używana przez wieki jako kościół koronacyjny dla węgierskich królów, smukła i pełna wdzięku architektura tego pięknego kościoła dominuje na głównym placu Zamku."),
-    "attractionName" : MessageLookupByLibrary.simpleMessage("Kościół Macieja"),
-    "attractions" : MessageLookupByLibrary.simpleMessage("Atrakcje"),
-    "errorOccurred" : m0,
-    "hotels" : MessageLookupByLibrary.simpleMessage("hotele"),
-    "locationsSearchBarHintText" : MessageLookupByLibrary.simpleMessage("Nazwy miast, regionów, miejsc, itd."),
-    "noResultsFound" : MessageLookupByLibrary.simpleMessage("Nie znaleziono wyników"),
-    "radius" : m1,
-    "restaurants" : MessageLookupByLibrary.simpleMessage("Restauracje"),
-    "searching" : MessageLookupByLibrary.simpleMessage("Wyszukiwanie..."),
-    "title" : MessageLookupByLibrary.simpleMessage("Doradzacz podróży")
-  };
+
+  static _notInlinedMessages(_) => <String, Function>{
+        "airports": MessageLookupByLibrary.simpleMessage("Lotniska"),
+        "attractionDescription": MessageLookupByLibrary.simpleMessage(
+            "Używana przez wieki jako kościół koronacyjny dla węgierskich królów, smukła i pełna wdzięku architektura tego pięknego kościoła dominuje na głównym placu Zamku."),
+        "attractionName":
+            MessageLookupByLibrary.simpleMessage("Kościół Macieja"),
+        "attractions": MessageLookupByLibrary.simpleMessage("Atrakcje"),
+        "errorOccurred": m0,
+        "hotels": MessageLookupByLibrary.simpleMessage("hotele"),
+        "locationsSearchBarHintText": MessageLookupByLibrary.simpleMessage(
+            "Nazwy miast, regionów, miejsc, itd."),
+        "noResultsFound":
+            MessageLookupByLibrary.simpleMessage("Nie znaleziono wyników"),
+        "radius": m1,
+        "restaurants": MessageLookupByLibrary.simpleMessage("Restauracje"),
+        "searching": MessageLookupByLibrary.simpleMessage("Wyszukiwanie..."),
+        "title": MessageLookupByLibrary.simpleMessage("Doradzacz podróży"),
+        "distance": MessageLookupByLibrary.simpleMessage("Dystans: "),
+        "rating": MessageLookupByLibrary.simpleMessage("Ocena: ")
+      };
 }

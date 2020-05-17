@@ -1,16 +1,20 @@
 import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
-import 'Locale/messages_all.dart';
 import 'package:intl/intl.dart';
 
-class AdvisorLocalizationsDelegate extends LocalizationsDelegate<AdvisorLocalizations> {
+import 'messages_all.dart';
+
+class AdvisorLocalizationsDelegate
+    extends LocalizationsDelegate<AdvisorLocalizations> {
   const AdvisorLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) => ['en', 'pl'].contains(locale.languageCode);
 
   @override
-  Future<AdvisorLocalizations> load(Locale locale) => AdvisorLocalizations.load(locale);
+  Future<AdvisorLocalizations> load(Locale locale) =>
+      AdvisorLocalizations.load(locale);
 
   @override
   bool shouldReload(AdvisorLocalizationsDelegate old) => false;
@@ -20,7 +24,8 @@ class AdvisorLocalizations {
   AdvisorLocalizations(this.localeName);
 
   static Future<AdvisorLocalizations> load(Locale locale) {
-    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String name =
+        locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
     return initializeMessages(localeName).then((_) {
@@ -29,7 +34,8 @@ class AdvisorLocalizations {
   }
 
   static AdvisorLocalizations of(BuildContext context) {
-    return Localizations.of<AdvisorLocalizations>(context, AdvisorLocalizations);
+    return Localizations.of<AdvisorLocalizations>(
+        context, AdvisorLocalizations);
   }
 
   final String localeName;
@@ -54,14 +60,14 @@ class AdvisorLocalizations {
     );
   }
 
-   String get locationsSearchBarHintText {
-     return Intl.message(
-       'Name of cities, districts, places, etc…',
-       name: 'locationsSearchBarHintText',
-       desc: 'Name of cities, districts, places, etc…',
-       locale: localeName,
-     );
-   }
+  String get locationsSearchBarHintText {
+    return Intl.message(
+      'Name of cities, districts, places, etc…',
+      name: 'locationsSearchBarHintText',
+      desc: 'Name of cities, districts, places, etc…',
+      locale: localeName,
+    );
+  }
 
   String get attractions {
     return Intl.message(
@@ -89,7 +95,7 @@ class AdvisorLocalizations {
       locale: localeName,
     );
   }
-  
+
   String get searching {
     return Intl.message(
       'Searching...',
@@ -124,24 +130,53 @@ class AdvisorLocalizations {
     );
   }
 
-  String errorOccurred(error) => Intl.message(
-      'Error occurred : $error',
-      name: 'errorOccurred',
-      args: [error],
-      desc: 'Print error message',
+  String get currency {
+    return Intl.message(
+      'USD',
+      name: 'currency',
       locale: localeName,
+    );
+  }
+
+  String get locale_string {
+    return Intl.message(
+      'en_US',
+      name: 'locale_string',
+      locale: localeName,
+    );
+  }
+
+  String errorOccurred(error) => Intl.message(
+        'Error occurred : $error',
+        name: 'errorOccurred',
+        args: [error],
+        desc: 'Print error message',
+        locale: localeName,
       );
 
   String radius(rad) => Intl.message(
-      'Radius $rad km',
-      name: 'radius',
-      args: [rad],
-      desc: 'radius',
-      locale: localeName,
+        'Radius $rad km',
+        name: 'radius',
+        args: [rad],
+        desc: 'radius',
+        locale: localeName,
       );
 
+  String get rating {
+    return Intl.message(
+      'Rating: ',
+      name: 'rating',
+      desc: 'rating',
+      locale: localeName,
+    );
+  }
 
-
-
+  String get distance {
+    return Intl.message(
+      'Distance: ',
+      name: 'distance',
+      desc: 'distance',
+      locale: localeName,
+    );
+  }
 }
-
