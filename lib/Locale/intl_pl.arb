@@ -1,0 +1,28 @@
+{
+	"title": "Doradzacz podróży",
+	"@title": {
+		"description": "Title for the Demo application",
+		"type": "text"
+	},
+	"restaurants": "Restauracje",
+	"@restaurants": {
+		"description": "Restauracje",
+		"type": "text",
+		"placeholders": {}
+	},
+	"locationsSearchBarHintText": "Nazwy miast, regionów, miejsc, itd.",
+	"@locationsSearchBarHintText": {
+		"description": "Name of cities, districts, places, etc…",
+		"type": "text",
+		"placeholders": {}
+	},
+	"airports": "Lotniska",
+	"attractions": "Atrakcje",
+	"errorOccurred": "Wystąpił błąd: {error}",
+	"hotels": "Hotele",
+	"noResultsFound": "Nie znaleziono wyników",
+	"radius": "Promień {rad} km",
+	"searching": "Wyszukiwanie...",
+	"attractionDescription": "Używana przez wieki jako kościół koronacyjny dla węgierskich królów, smukła i pełna wdzięku architektura tego pięknego kościoła dominuje na głównym placu Zamku.",
+	"attractionName": "Kościół Macieja"
+}
