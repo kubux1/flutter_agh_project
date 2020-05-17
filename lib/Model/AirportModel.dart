@@ -1,6 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:touristadvisor/DetailView/AirportDetails.dart';
+import 'package:touristadvisor/Model/LocationModel.dart';
+
 import 'ILocationModel.dart';
 
-class AirportModel implements ILocationModel {
+class AirportModel extends LocationModel {
   final LocationType locationType = LocationType.airport;
   int id;
   String name;
@@ -46,6 +51,8 @@ class AirportModel implements ILocationModel {
     latitude = 40.6435529;
     longitude = -73.78211390000001;
     parent_code = "NYC";
+    rating = 3.5;
+    distance = 1.5;
   }
 
   factory AirportModel.fromJson(Map<String, dynamic> json) {
@@ -60,6 +67,17 @@ class AirportModel implements ILocationModel {
         time_zone_name: json['time_zone_name'] ?? "",
         latitude: double.parse(json["longitude"] ?? "0"),
         longitude: double.parse(json["longitude"] ?? "0"),
-        parent_code: json['parent_code'] ?? "");
+        parent_code: json['parent_code'] ?? "",
+        distance: double.parse(json['distance'] ?? 0.0),
+        rating: double.parse(json['rating'] ?? 0.0));
+  }
+
+  @override
+  goToDetailedView(BuildContext context, int locationId) {
+    //TODO: Get a specific object from API or cache
+    final AirportModel airportModel = new AirportModel.example();
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => AirportDetails(airportModel)));
   }
 }

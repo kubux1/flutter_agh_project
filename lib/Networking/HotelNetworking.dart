@@ -1,36 +1,34 @@
-
 import 'dart:async';
 import 'dart:convert';
-import '../Model/HotelModel.dart';
+
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-  Future<List<HotelModel>> fetchHotel(http.Client client, String currency, String lang, String checkinDate, int locationId) async {
-    var uri = Uri.https("tripadvisor1.p.rapidapi.com", "/hotels/get-details", {
-      "adults" : "1",
-      "nights" : "2",
-      "currency" : currency,
-      "lang" : lang,
-      "checkin" : checkinDate,
-      "location_id" : locationId.toString() // "277359",
+import '../Model/HotelModel.dart';
 
-    });
-    var key = "";
+Future<List<HotelModel>> fetchHotel(http.Client client, String currency,
+    String lang, String checkinDate, int locationId) async {
+  var uri = Uri.https("tripadvisor1.p.rapidapi.com", "/hotels/get-details", {
+    "adults": "1",
+    "nights": "2",
+    "currency": currency,
+    "lang": lang,
+    "checkin": checkinDate,
+    "location_id": locationId.toString() // "277359",
+  });
+  var key = "";
 
-    final response = await client.get(uri, headers: {
-      "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-      "x-rapidapi-key": key
-    });
+  final response = await client.get(uri, headers: {
+    "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
+    "x-rapidapi-key": key
+  });
 
-    return compute(parseHotel, response.body);
+  return compute(parseHotel, response.body);
+}
 
-  }
+List<HotelModel> parseHotel(String responseBody) {
+  var data = json.decode(responseBody);
+  var parsed = data["data"] as List;
 
-  List<HotelModel> parseHotel(String responseBody) {
-    var data = json.decode(responseBody);
-    var parsed = data["data"] as List;
-
-    return parsed.map<HotelModel>((json) => HotelModel.fromJson(json)).toList();
-  }
-
+  return parsed.map<HotelModel>((json) => HotelModel.fromJson(json)).toList();
+}

@@ -2,37 +2,43 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'I18n.dart';
-import 'Model/HotelModel.dart';
+
+import '../Model/HotelModel.dart';
 
 // ignore: must_be_immutable
 class HotelDetails extends StatefulWidget {
+  HotelModel hotel;
+
+  HotelDetails(HotelModel hotel) {
+    this.hotel = hotel;
+  }
+
   @override
-  HotelDetailsState createState() => HotelDetailsState();
+  HotelDetailsState createState() => HotelDetailsState(hotel);
 }
 
 class HotelDetailsState extends State<HotelDetails> {
-  // example hotel model object for testing purposes only
-  final HotelModel hotel = new HotelModel.example();
+  HotelModel hotel;
+
+  HotelDetailsState(HotelModel hotel) {
+    this.hotel = hotel;
+  }
 
   Widget titleSection(hotelName) => Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-          children: <Widget>[
-            Expanded(child: Text(hotelName,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20
-                ))),
-            Icon(Icons.favorite_border, size: 40)
-          ])
-  );
+      child: Row(children: <Widget>[
+        Expanded(
+            child: Text(hotelName,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
+        Icon(Icons.favorite_border, size: 40)
+      ]));
 
   List<Widget> _buildStars(double count) {
     var list = <Icon>[];
-    for (var i=0; i<count.floor(); i++){
+    for (var i = 0; i < count.floor(); i++) {
       list.add(Icon(Icons.star));
     }
-    if (count - count.floorToDouble() != 0.0){
+    if (count - count.floorToDouble() != 0.0) {
       list.add(Icon(Icons.star_half));
     }
     return list;
@@ -40,14 +46,12 @@ class HotelDetailsState extends State<HotelDetails> {
 
   Widget ratingSection(rating, reviews) => Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
-      child:  Row(
-          children: <Widget>[
-            ..._buildStars(rating),
-            SizedBox(width: 10),
-            Text(reviews),
-            Text(' Reviews')
-          ])
-  );
+      child: Row(children: <Widget>[
+        ..._buildStars(rating),
+        SizedBox(width: 10),
+        Text(reviews),
+        Text(' Reviews')
+      ]));
 
   RichText _createLink(String linkUrl, {String linkText = ''}) {
     if (linkText == '') {
@@ -136,7 +140,8 @@ class HotelDetailsState extends State<HotelDetails> {
     }
   }
 
-  RichText _createMapsLink(String linkText, {double lat = null, double lon = null}) {
+  RichText _createMapsLink(String linkText,
+      {double lat = null, double lon = null}) {
     return new RichText(
       overflow: TextOverflow.ellipsis,
       text: new TextSpan(
@@ -144,10 +149,9 @@ class HotelDetailsState extends State<HotelDetails> {
         style: new TextStyle(color: Colors.blue),
         recognizer: new TapGestureRecognizer()
           ..onTap = () {
-            if(lat != null && lon != null){
+            if (lat != null && lon != null) {
               _launchMapsUrlFromCoord(lat, lon);
-            }
-            else{
+            } else {
               _launchMapsUrlFromAddr(linkText);
             }
           },
@@ -157,70 +161,48 @@ class HotelDetailsState extends State<HotelDetails> {
 
   Widget contactSection(address, phone, website, email) => Container(
       padding: const EdgeInsets.symmetric(vertical: 15),
-      child: Column(
-          children: <Widget>[
-            Row(
-                children: <Widget>[
-                  Icon(Icons.location_on),
-                  SizedBox(width: 10),
-                  Flexible(
-                      child:
-                      _createMapsLink(address)
-                  )
-                ]),
-            SizedBox(height: 8),
-            Row(
-                children: <Widget>[
-                  Icon(Icons.phone),
-                  SizedBox(width: 10),
-                  Flexible(
-                      child:
-                      _createCallerLink(phone)
-                  )
-                ]),
-            SizedBox(height: 8),
-            Row(
-                children: <Widget>[
-                  Icon(Icons.laptop),
-                  SizedBox(width: 10),
-                  Flexible(
-                      child:
-                      _createLink(website, linkText:'')
-                  )
-                ]),
-            SizedBox(height: 8),
-            Row(
-                children: <Widget>[
-                  Icon(Icons.mail_outline),
-                  SizedBox(width: 10),
-                  Flexible(
-                      child:
-                      _createMailLink(email, linkText: '')
-                  )
-                ])
-          ]
-      )
-  );
-  
+      child: Column(children: <Widget>[
+        Row(children: <Widget>[
+          Icon(Icons.location_on),
+          SizedBox(width: 10),
+          Flexible(child: _createMapsLink(address))
+        ]),
+        SizedBox(height: 8),
+        Row(children: <Widget>[
+          Icon(Icons.phone),
+          SizedBox(width: 10),
+          Flexible(child: _createCallerLink(phone))
+        ]),
+        SizedBox(height: 8),
+        Row(children: <Widget>[
+          Icon(Icons.laptop),
+          SizedBox(width: 10),
+          Flexible(child: _createLink(website, linkText: ''))
+        ]),
+        SizedBox(height: 8),
+        Row(children: <Widget>[
+          Icon(Icons.mail_outline),
+          SizedBox(width: 10),
+          Flexible(child: _createMailLink(email, linkText: ''))
+        ])
+      ]));
 
   Widget imageSection(url) => Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Image.network(url)
-  );
+      child: Image.network(url));
 
   Widget descriptionSection(descriptionText) => Container(
-    padding: const EdgeInsets.symmetric(vertical: 10),
-    child: Text(
-      descriptionText,
-      softWrap: true,
-      textAlign: TextAlign.justify,
-    ),
-  );
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Text(
+          descriptionText,
+          softWrap: true,
+          textAlign: TextAlign.justify,
+        ),
+      );
 
   bool favouritePressed = false;
 
-  void pressFavorite()
-  {
+  void pressFavorite() {
     if (favouritePressed)
       favouritePressed = false;
     else
@@ -229,7 +211,6 @@ class HotelDetailsState extends State<HotelDetails> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(hotel.name),
@@ -239,37 +220,33 @@ class HotelDetailsState extends State<HotelDetails> {
           // action button
           new IconButton(
               icon: new Icon(
-                favouritePressed ? Icons.favorite : Icons.favorite_border,
-                color:  favouritePressed ? Colors.red : null,
-                size: 30
-              ),
+                  favouritePressed ? Icons.favorite : Icons.favorite_border,
+                  color: favouritePressed ? Colors.red : null,
+                  size: 30),
               onPressed: () {
                 setState(() {
                   pressFavorite();
 //                  _alreadySaved = isSaved(key); //<--update alreadSaved
                 });
-              }
-          ),
+              }),
         ],
         leading: IconButton(
           icon: Icon(Icons.hotel, size: 24),
-          onPressed: () { },
+          onPressed: () {},
         ),
       ),
       body: SafeArea(
           child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(15),
-            child: Center(
-                child: Column(
-                    children: <Widget>[
-                      ratingSection(hotel.rating, hotel.numReviews.toString()),
-                      imageSection(hotel.photoUrl),
-                      descriptionSection(hotel.description),
-                      contactSection(hotel.address, hotel.phone, hotel.website, hotel.email)
-                    ])),
-          ))),
+              child: Padding(
+        padding: EdgeInsets.all(15),
+        child: Center(
+            child: Column(children: <Widget>[
+          ratingSection(hotel.rating, hotel.numReviews.toString()),
+          imageSection(hotel.photoUrl),
+          descriptionSection(hotel.description),
+          contactSection(hotel.address, hotel.phone, hotel.website, hotel.email)
+        ])),
+      ))),
     );
   }
-
 }

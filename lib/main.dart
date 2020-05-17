@@ -1,27 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:touristadvisor/HotelDetails.dart';
-import 'package:touristadvisor/LocationDetailView/AirportDetails.dart';
-import 'LocationsSearchBar.dart';
-import 'LocationsSearchBarFilter.dart';
-import 'package:touristadvisor/AttractionDetails.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'I18n.dart';
-import 'package:permission_handler/permission_handler.dart';
+
+import 'Locale/I18n.dart';
+import 'LocationSearchBar/LocationsSearchBar.dart';
+import 'LocationSearchBar/LocationsSearchBarFilter.dart';
 
 class DefaultTabControllerApp extends StatelessWidget {
-
-  _permissionGranted = await location.hasPermission();
-  if (_permissionGranted == PermissionStatus.denied) {
-  _permissionGranted = await location.requestPermission();
-  if (_permissionGranted != PermissionStatus.granted) {
-  return;
-  }
-  }
-  
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      // The number of tabs / content sections we need to display
+        // The number of tabs / content sections we need to display
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -32,13 +20,7 @@ class DefaultTabControllerApp extends StatelessWidget {
             title: Text(AdvisorLocalizations.of(context).title),
           ),
           body: TabBarView(
-//                            children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
-                            children: [LocationsSearchBar(), AirportDetails()]),
-//              children: [
-//                LocationsSearchBar(),
-//                AttractionDetails()
-//              ]
-//          ),
+              children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
         ));
   }
 }
@@ -66,6 +48,5 @@ class MyApp extends StatelessWidget {
 }
 
 void main() {
-
   runApp(MyApp());
 }
