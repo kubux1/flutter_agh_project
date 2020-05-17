@@ -8,58 +8,6 @@ import 'AirportModel.dart';
 import 'HotelModel.dart';
 import 'ILocationModel.dart';
 
-abstract class LocationDetailsStrategy {
-  showDetails(LocationType locationType);
-}
-
-
-
-class LocationDetailsPresent {
-  LocationDetailsStrategy locationDetailsStrategy;
-
-  showDetails(LocationType locationType) {
-
-    locationDetailsStrategy.showDetails(locationType);
-  }
-}
-
-class AttractionDetailsPresent implements LocationDetailsStrategy {
-  @override
-  showDetails(LocationType locationType) {
-    // TODO: implement showDetails
-    print("pokazujemy atrakcje");
-    throw UnimplementedError();
-  }
-}
-
-class RestaurantDetailsPresent implements LocationDetailsStrategy {
-  @override
-  showDetails(LocationType locationType) {
-    // TODO: implement showDetails
-    print("pokazujemy restauracje");
-    throw UnimplementedError();
-  }
-}
-
-class HotelDetailsPresent implements LocationDetailsStrategy {
-  @override
-  showDetails(LocationType locationType) {
-    // TODO: implement showDetails
-    print("pokazujemy hotele");
-    throw UnimplementedError();
-  }
-}
-
-class AirportDetailsPresent implements LocationDetailsStrategy {
-  @override
-  showDetails(LocationType locationType) {
-    // TODO: implement showDetails
-    print("pokazujemy lotniska");
-    throw UnimplementedError();
-  }
-}
-
-
 class CategoryModel {
   final String key;
   final String name;
