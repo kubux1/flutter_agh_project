@@ -7,8 +7,9 @@ import 'package:touristadvisor/constants.dart';
 
 import '../Model/HotelModel.dart';
 
-Future<List<HotelModel>> fetchHotel(http.Client client, String currency,
+Future<List<HotelModel>> fetchHotels(http.Client client, String currency,
     String lang, String checkinDate, int locationId) async {
+
   var uri = Uri.https("tripadvisor1.p.rapidapi.com", "/hotels/get-details", {
     "adults": "1",
     "nights": "2",
@@ -23,12 +24,30 @@ Future<List<HotelModel>> fetchHotel(http.Client client, String currency,
     "x-rapidapi-key": APIKey
   });
 
-  return compute(parseHotel, response.body);
+  return compute(parseHotels, response.body);
 }
 
-List<HotelModel> parseHotel(String responseBody) {
+List<HotelModel> parseHotels(String responseBody) {
   var data = json.decode(responseBody);
   var parsed = data["data"] as List;
 
   return parsed.map<HotelModel>((json) => HotelModel.fromJson(json)).toList();
+}
+
+Future<HotelModel> fetchHotel(String locationId) async {
+  var url = "https://tripadvisor1.p.rapidapi.com/hotels/get-details?location_id=";
+  url += locationId;
+
+  final response = await http.get(url, headers: {
+    "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
+    "x-rapidapi-key": APIKey
+  });
+
+  return compute(parseHotel, response.body);
+
+}
+
+HotelModel parseHotel(String responseBody) {
+  var data = json.decode(responseBody);
+  return HotelModel.fromJson(data);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:touristadvisor/Networking/HotelNetworking.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Model/HotelModel.dart';
@@ -12,6 +13,10 @@ class HotelDetails extends StatefulWidget {
   HotelDetails(HotelModel hotel) {
     this.hotel = hotel;
   }
+
+//  HotelDetails(int locationId) {
+//    this.hotel = fetchHotel(locationId);
+//  }
 
   @override
   HotelDetailsState createState() => HotelDetailsState(hotel);

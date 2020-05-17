@@ -3,7 +3,12 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:touristadvisor/DetailView/AttractionDetails.dart';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:touristadvisor/DetailView/HotelDetails.dart';
+import 'package:touristadvisor/Networking/HotelNetworking.dart';
 import 'AirportModel.dart';
 import 'HotelModel.dart';
 import 'ILocationModel.dart';
@@ -57,26 +62,37 @@ class LocationModel implements ILocationModel {
 
   @override
   goToDetailedView(BuildContext context, int locationId) {
-    showDetails(locationType);
+    showDetails(context, locationType);
   }
 
 }
 
 
-showDetails(LocationType locationType) {
+showDetails(BuildContext context, LocationType locationType) {
+  print(locationType);
   switch(locationType) {
 
 
-    case LocationType.attraction: {  print("pokazujemy attraction"); }
+    case LocationType.attraction: {
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => AttractionDetails()));
+    }
     break;
 
-    case LocationType.restaurant: {  print("pokazujemy restaurant"); }
+    case LocationType.restaurant: {
+//      Navigator.push(context,
+//          MaterialPageRoute(builder: (context) => RestaurantDetails()));
+    }
     break;
 
-    case LocationType.hotel: { print("pokazujemy hotel");  }
+    case LocationType.hotel: {
+//      Navigator.push(context,
+//          MaterialPageRoute(builder: (context) => HotelDetails(fetchHotel("1231321"))));
+    }
     break;
 
-    case LocationType.restaurant: {  print("pokazujemy restaurant");  }
+    case LocationType.airport: {  print("pokazujemy hotel");  }
     break;
 
     default: { print("pokazujemy nie wiem co"); }
