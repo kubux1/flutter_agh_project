@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:touristadvisor/Favorites/FavoritesDB.dart';
-import 'Favorites/Favorites.dart';
-import 'package:touristadvisor/HotelDetails.dart';
-import 'LocationsSearchBar.dart';
-import 'LocationsSearchBarFilter.dart';
-import 'package:touristadvisor/AttractionDetails.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'I18n.dart';
+
+import 'Locale/I18n.dart';
+import 'LocationSearchBar/LocationsSearchBar.dart';
+import 'LocationSearchBar/LocationsSearchBarFilter.dart';
 
 void main() {
   runApp(
@@ -23,7 +21,7 @@ class DefaultTabControllerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      // The number of tabs / content sections we need to display
+        // The number of tabs / content sections we need to display
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -34,13 +32,7 @@ class DefaultTabControllerApp extends StatelessWidget {
             title: Text(AdvisorLocalizations.of(context).title),
           ),
           body: TabBarView(
-                            children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
-//                            children: [LocationsSearchBar(), HotelDetails()]),
-//              children: [
-//                LocationsSearchBar(),
-//                AttractionDetails()
-//              ]
-//          ),
+              children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
         ));
   }
 }

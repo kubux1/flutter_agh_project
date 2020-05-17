@@ -1,28 +1,25 @@
-import 'package:flutter/material.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'I18n.dart';
-import 'package:touristadvisor/AttractionDetails.dart';
-import 'Model/LocationModel.dart';
+import 'package:flutter/material.dart';
+
+import '../Locale/I18n.dart';
+import '../Model/LocationModel.dart';
 
 class LocationsSearchBar extends StatelessWidget {
   static int kmRadius = 1;
-  static List<String> checkedBoxes;
+  static List<String> selectedLocations;
 
   Future<List<LocationModel>> search(String search) async {
-    Future<List<LocationModel>> locations = loadLocations();
+    Future<List<LocationModel>> locations =
+        loadLocations(selectedLocations, kmRadius);
     return locations;
   }
 
   onLocationTap(LocationModel location, BuildContext context) {
-    print(location.toString() + kmRadius.toString());
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AttractionDetails())
-    );
+    location.goToDetailedView(context, location.id);
   }
 
   static onCheckBoxSelected(List<String> selectedParams) {
-    checkedBoxes = selectedParams;
+    selectedLocations = selectedParams;
   }
 
   static onSliderMoved(int kmValue) {
@@ -41,7 +38,11 @@ class LocationsSearchBar extends StatelessWidget {
           onItemFound: (LocationModel location, int index) {
             return ListTile(
               title: Text(location.name),
-              subtitle: Text(location.rating.toString()),
+              subtitle: Text(AdvisorLocalizations.of(context).distance +
+                  location.distance.round().toString() +
+                  "km\t \t" +
+                  AdvisorLocalizations.of(context).rating +
+                  location.rating.toString()),
               onTap: () => onLocationTap(location, context),
             );
           },
@@ -52,8 +53,8 @@ class LocationsSearchBar extends StatelessWidget {
           ),
           onError: (error) {
             return Center(
-              child: Text(AdvisorLocalizations.of(context).errorOccurred(error))
-            );
+                child: Text(
+                    AdvisorLocalizations.of(context).errorOccurred(error)));
           },
         ),
       )),
