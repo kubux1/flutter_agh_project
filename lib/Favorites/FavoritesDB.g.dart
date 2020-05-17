@@ -63,6 +63,45 @@ class FavoriteAttraction extends DataClass
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}email']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || attractionId != null) {
+      map['attraction_id'] = Variable<int>(attractionId);
+    }
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
+    if (!nullToAbsent || latitude != null) {
+      map['latitude'] = Variable<double>(latitude);
+    }
+    if (!nullToAbsent || longitude != null) {
+      map['longitude'] = Variable<double>(longitude);
+    }
+    if (!nullToAbsent || numReviews != null) {
+      map['num_reviews'] = Variable<int>(numReviews);
+    }
+    if (!nullToAbsent || photo != null) {
+      map['photo'] = Variable<Uint8List>(photo);
+    }
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || address != null) {
+      map['address'] = Variable<String>(address);
+    }
+    if (!nullToAbsent || phoneNumber != null) {
+      map['phone_number'] = Variable<String>(phoneNumber);
+    }
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    return map;
+  }
+
   factory FavoriteAttraction.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -96,39 +135,6 @@ class FavoriteAttraction extends DataClass
       'phoneNumber': serializer.toJson<String>(phoneNumber),
       'email': serializer.toJson<String>(email),
     };
-  }
-
-  @override
-  FavoriteAttractionsCompanion createCompanion(bool nullToAbsent) {
-    return FavoriteAttractionsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      attractionId: attractionId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(attractionId),
-      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
-      latitude: latitude == null && nullToAbsent
-          ? const Value.absent()
-          : Value(latitude),
-      longitude: longitude == null && nullToAbsent
-          ? const Value.absent()
-          : Value(longitude),
-      numReviews: numReviews == null && nullToAbsent
-          ? const Value.absent()
-          : Value(numReviews),
-      photo:
-          photo == null && nullToAbsent ? const Value.absent() : Value(photo),
-      description: description == null && nullToAbsent
-          ? const Value.absent()
-          : Value(description),
-      address: address == null && nullToAbsent
-          ? const Value.absent()
-          : Value(address),
-      phoneNumber: phoneNumber == null && nullToAbsent
-          ? const Value.absent()
-          : Value(phoneNumber),
-      email:
-          email == null && nullToAbsent ? const Value.absent() : Value(email),
-    );
   }
 
   FavoriteAttraction copyWith(
@@ -259,6 +265,34 @@ class FavoriteAttractionsCompanion extends UpdateCompanion<FavoriteAttraction> {
         address = Value(address),
         phoneNumber = Value(phoneNumber),
         email = Value(email);
+  static Insertable<FavoriteAttraction> custom({
+    Expression<int> id,
+    Expression<int> attractionId,
+    Expression<String> name,
+    Expression<double> latitude,
+    Expression<double> longitude,
+    Expression<int> numReviews,
+    Expression<Uint8List> photo,
+    Expression<String> description,
+    Expression<String> address,
+    Expression<String> phoneNumber,
+    Expression<String> email,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (attractionId != null) 'attraction_id': attractionId,
+      if (name != null) 'name': name,
+      if (latitude != null) 'latitude': latitude,
+      if (longitude != null) 'longitude': longitude,
+      if (numReviews != null) 'num_reviews': numReviews,
+      if (photo != null) 'photo': photo,
+      if (description != null) 'description': description,
+      if (address != null) 'address': address,
+      if (phoneNumber != null) 'phone_number': phoneNumber,
+      if (email != null) 'email': email,
+    });
+  }
+
   FavoriteAttractionsCompanion copyWith(
       {Value<int> id,
       Value<int> attractionId,
@@ -284,6 +318,45 @@ class FavoriteAttractionsCompanion extends UpdateCompanion<FavoriteAttraction> {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       email: email ?? this.email,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (attractionId.present) {
+      map['attraction_id'] = Variable<int>(attractionId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (latitude.present) {
+      map['latitude'] = Variable<double>(latitude.value);
+    }
+    if (longitude.present) {
+      map['longitude'] = Variable<double>(longitude.value);
+    }
+    if (numReviews.present) {
+      map['num_reviews'] = Variable<int>(numReviews.value);
+    }
+    if (photo.present) {
+      map['photo'] = Variable<Uint8List>(photo.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (address.present) {
+      map['address'] = Variable<String>(address.value);
+    }
+    if (phoneNumber.present) {
+      map['phone_number'] = Variable<String>(phoneNumber.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    return map;
   }
 }
 
@@ -448,71 +521,78 @@ class $FavoriteAttractionsTable extends FavoriteAttractions
   @override
   final String actualTableName = 'favorite_attractions';
   @override
-  VerificationContext validateIntegrity(FavoriteAttractionsCompanion d,
+  VerificationContext validateIntegrity(Insertable<FavoriteAttraction> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     }
-    if (d.attractionId.present) {
+    if (data.containsKey('attraction_id')) {
       context.handle(
           _attractionIdMeta,
-          attractionId.isAcceptableValue(
-              d.attractionId.value, _attractionIdMeta));
+          attractionId.isAcceptableOrUnknown(
+              data['attraction_id'], _attractionIdMeta));
     } else if (isInserting) {
       context.missing(_attractionIdMeta);
     }
-    if (d.name.present) {
+    if (data.containsKey('name')) {
       context.handle(
-          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
+          _nameMeta, name.isAcceptableOrUnknown(data['name'], _nameMeta));
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (d.latitude.present) {
+    if (data.containsKey('latitude')) {
       context.handle(_latitudeMeta,
-          latitude.isAcceptableValue(d.latitude.value, _latitudeMeta));
+          latitude.isAcceptableOrUnknown(data['latitude'], _latitudeMeta));
     } else if (isInserting) {
       context.missing(_latitudeMeta);
     }
-    if (d.longitude.present) {
+    if (data.containsKey('longitude')) {
       context.handle(_longitudeMeta,
-          longitude.isAcceptableValue(d.longitude.value, _longitudeMeta));
+          longitude.isAcceptableOrUnknown(data['longitude'], _longitudeMeta));
     } else if (isInserting) {
       context.missing(_longitudeMeta);
     }
-    if (d.numReviews.present) {
-      context.handle(_numReviewsMeta,
-          numReviews.isAcceptableValue(d.numReviews.value, _numReviewsMeta));
+    if (data.containsKey('num_reviews')) {
+      context.handle(
+          _numReviewsMeta,
+          numReviews.isAcceptableOrUnknown(
+              data['num_reviews'], _numReviewsMeta));
     } else if (isInserting) {
       context.missing(_numReviewsMeta);
     }
-    if (d.photo.present) {
+    if (data.containsKey('photo')) {
       context.handle(
-          _photoMeta, photo.isAcceptableValue(d.photo.value, _photoMeta));
+          _photoMeta, photo.isAcceptableOrUnknown(data['photo'], _photoMeta));
     } else if (isInserting) {
       context.missing(_photoMeta);
     }
-    if (d.description.present) {
-      context.handle(_descriptionMeta,
-          description.isAcceptableValue(d.description.value, _descriptionMeta));
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description'], _descriptionMeta));
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
-    if (d.address.present) {
+    if (data.containsKey('address')) {
       context.handle(_addressMeta,
-          address.isAcceptableValue(d.address.value, _addressMeta));
+          address.isAcceptableOrUnknown(data['address'], _addressMeta));
     } else if (isInserting) {
       context.missing(_addressMeta);
     }
-    if (d.phoneNumber.present) {
-      context.handle(_phoneNumberMeta,
-          phoneNumber.isAcceptableValue(d.phoneNumber.value, _phoneNumberMeta));
+    if (data.containsKey('phone_number')) {
+      context.handle(
+          _phoneNumberMeta,
+          phoneNumber.isAcceptableOrUnknown(
+              data['phone_number'], _phoneNumberMeta));
     } else if (isInserting) {
       context.missing(_phoneNumberMeta);
     }
-    if (d.email.present) {
+    if (data.containsKey('email')) {
       context.handle(
-          _emailMeta, email.isAcceptableValue(d.email.value, _emailMeta));
+          _emailMeta, email.isAcceptableOrUnknown(data['email'], _emailMeta));
     } else if (isInserting) {
       context.missing(_emailMeta);
     }
@@ -525,45 +605,6 @@ class $FavoriteAttractionsTable extends FavoriteAttractions
   FavoriteAttraction map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return FavoriteAttraction.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(FavoriteAttractionsCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.attractionId.present) {
-      map['attraction_id'] = Variable<int, IntType>(d.attractionId.value);
-    }
-    if (d.name.present) {
-      map['name'] = Variable<String, StringType>(d.name.value);
-    }
-    if (d.latitude.present) {
-      map['latitude'] = Variable<double, RealType>(d.latitude.value);
-    }
-    if (d.longitude.present) {
-      map['longitude'] = Variable<double, RealType>(d.longitude.value);
-    }
-    if (d.numReviews.present) {
-      map['num_reviews'] = Variable<int, IntType>(d.numReviews.value);
-    }
-    if (d.photo.present) {
-      map['photo'] = Variable<Uint8List, BlobType>(d.photo.value);
-    }
-    if (d.description.present) {
-      map['description'] = Variable<String, StringType>(d.description.value);
-    }
-    if (d.address.present) {
-      map['address'] = Variable<String, StringType>(d.address.value);
-    }
-    if (d.phoneNumber.present) {
-      map['phone_number'] = Variable<String, StringType>(d.phoneNumber.value);
-    }
-    if (d.email.present) {
-      map['email'] = Variable<String, StringType>(d.email.value);
-    }
-    return map;
   }
 
   @override
