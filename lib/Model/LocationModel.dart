@@ -4,8 +4,6 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'AirportModel.dart';
-import 'HotelModel.dart';
 import 'ILocationModel.dart';
 
 class CategoryModel {
@@ -15,13 +13,9 @@ class CategoryModel {
   CategoryModel({this.key, this.name});
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    return CategoryModel (
-        name: json['name'] ?? "",
-        key: json['key'] ?? ""
-    );
+    return CategoryModel(name: json['name'] ?? "", key: json['key'] ?? "");
   }
 }
-
 
 class LocationModel implements ILocationModel {
   final int id;
@@ -30,76 +24,101 @@ class LocationModel implements ILocationModel {
   final double rating;
   final bool isClosed;
   final LocationType locationType;
+
 //  final CategoryModel category;
 
-  LocationModel(
-      {this.id,
-      this.name,
-      this.distance,
-      this.rating,
-      this.isClosed,
-      this.locationType,
+  LocationModel({
+    this.id,
+    this.name,
+    this.distance,
+    this.rating,
+    this.isClosed,
+    this.locationType,
 //      this.categoryModel
-      });
+  });
 
   factory LocationModel.fromJson(Map<String, dynamic> json) {
-
     return LocationModel(
         id: int.parse(json['location_id']),
         name: json['name'] ?? "",
         distance: (1.0 + 29.0 * Random().nextDouble()),
         rating: double.parse(json['rating'] ?? 0.0),
         isClosed: json['is_closed'],
-        locationType: getLocationType(CategoryModel.fromJson(json['category']).key)
-    );
+        locationType:
+            getLocationType(CategoryModel.fromJson(json['category']).key));
 //        category
   }
 
-  @override
-  goToDetailedView(BuildContext context, int locationId) {
-    showDetails(locationType);
-  }
+  showDetails(LocationType locationType, int locationId, BuildContext context) {
+    switch (locationType) {
+      case LocationType.attraction:
+        {
+          //TODO: Pobrac szczegolowy widok dla zadanego "locationId"
+          // TODO: Przejsc do szczegolowego widoku
+          //    Navigator.push(context,
+          //        MaterialPageRoute(builder: (context) => AirportDetails(airportModel)));
+          print("pokazujemy attraction");
+        }
+        break;
 
-}
+      case LocationType.restaurant:
+        {
+          print("pokazujemy restaurant");
+        }
+        break;
 
+      case LocationType.hotel:
+        {
+          print("pokazujemy hotel");
+        }
+        break;
 
-showDetails(LocationType locationType) {
-  switch(locationType) {
+      case LocationType.restaurant:
+        {
+          print("pokazujemy restaurant");
+        }
+        break;
 
-
-    case LocationType.attraction: {  print("pokazujemy attraction"); }
-    break;
-
-    case LocationType.restaurant: {  print("pokazujemy restaurant"); }
-    break;
-
-    case LocationType.hotel: { print("pokazujemy hotel");  }
-    break;
-
-    case LocationType.restaurant: {  print("pokazujemy restaurant");  }
-    break;
-
-    default: { print("pokazujemy nie wiem co"); }
-    break;
+      default:
+        {
+          print("pokazujemy nie wiem co");
+        }
+        break;
+    }
   }
 }
 
 LocationType getLocationType(String category) {
-  switch(category) {
-    case "hotel": {  return LocationType.hotel; }
-    break;
+  switch (category) {
+    case "hotel":
+      {
+        return LocationType.hotel;
+      }
+      break;
 
-    case "attraction": { return LocationType.attraction; }
-    break;
+    case "attraction":
+      {
+        return LocationType.attraction;
+      }
+      break;
 
-    case "restaurant": {  return LocationType.restaurant; }
-    break;
+    case "restaurant":
+      {
+        return LocationType.restaurant;
+      }
+      break;
 
-    case "airport": {  return LocationType.airport;  }
-    break;
+    case "airport":
+      {
+        return LocationType.airport;
+      }
+      break;
 
-    default: { return LocationType.attraction; }
-    break;
+    default:
+      {
+        return LocationType.attraction;
+      }
+      break;
   }
 }
 
@@ -109,7 +128,7 @@ Future<String> _loadLocationsAsset() async {
 }
 
 Future<List<LocationModel>> loadLocations(
-    List<String> selectedLocations, int kmRadius) async {
+    List<LocationType> selectedLocations, int kmRadius) async {
   String jsonLocationsOverall = await _loadLocationsAsset();
   var data = jsonDecode(jsonLocationsOverall);
   var parsed = data["data"] as List;
@@ -120,16 +139,17 @@ Future<List<LocationModel>> loadLocations(
     locationList.add(location['result_object']);
   }
 
-
 // List<LocationModel> locations = await locationList
-    //  .map<LocationModel>((json) => LocationModel.fromJson(json))
+  //  .map<LocationModel>((json) => LocationModel.fromJson(json))
   //    .toList();
 
 //  final AirportModel airportModel = new AirportModel.example();
   //final HotelModel hotelModel = new HotelModel.example();
   //locations.add(hotelModel);
 //  locations.add(airportModel);
-  
-  List<LocationModel> locations = await locationList.map<LocationModel>((json) => LocationModel.fromJson(json)).toList();
+
+  List<LocationModel> locations = await locationList
+      .map<LocationModel>((json) => LocationModel.fromJson(json))
+      .toList();
   return locations;
 }

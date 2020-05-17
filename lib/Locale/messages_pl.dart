@@ -33,7 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kościół Macieja"),
         "attractions": MessageLookupByLibrary.simpleMessage("Atrakcje"),
         "errorOccurred": m0,
-        "hotels": MessageLookupByLibrary.simpleMessage("hotele"),
+        "hotels": MessageLookupByLibrary.simpleMessage("Hotele"),
         "locationsSearchBarHintText": MessageLookupByLibrary.simpleMessage(
             "Nazwy miast, regionów, miejsc, itd."),
         "noResultsFound":

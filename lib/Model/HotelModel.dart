@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:touristadvisor/Model/LocationModel.dart';
 
-import '../DetailView/HotelDetails.dart';
 import 'ILocationModel.dart';
 
 class HotelModel extends LocationModel {
@@ -101,14 +98,5 @@ class HotelModel extends LocationModel {
         address: json["address"] ?? "",
         distance: double.parse(json['distance'] ?? 0.0),
         email: json["email"] ?? "");
-  }
-
-  @override
-  goToDetailedView(BuildContext context, int locationId) {
-    //TODO: Get a specific object from API or cache
-    final HotelModel hotelModel = new HotelModel.example();
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => HotelDetails(hotelModel)));
   }
 }
