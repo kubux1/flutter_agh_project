@@ -5,8 +5,14 @@ import 'package:touristadvisor/Model/LocationModel.dart';
 
 import 'ILocationModel.dart';
 
+import 'dart:ffi';
+import 'package:touristadvisor/Model/PhotoModel.dart';
+
+import '../Networking/AttractionNetworking.dart';
+
 class AttractionModel extends LocationModel{
   final LocationType locationType = LocationType.attraction;
+  String url;
   int id;
   String name;
   double latitude;
@@ -21,8 +27,9 @@ class AttractionModel extends LocationModel{
   String email;
   double distance;
 
-  AttractionModel(
-      {this.id,
+  AttractionModel({
+      this.url,
+      this.id,
       this.name,
       this.latitude,
       this.longitude,
@@ -65,7 +72,8 @@ class AttractionModel extends LocationModel{
         address: json["adress"] ?? "",
         website: json['website'] ?? "",
         email: json["email"] ?? "",
-        distance: double.parse(json['distance'] ?? "0.0")
+        distance: double.parse(json['distance'] ?? "0.0"),
+        url: PhotoModel.fromJson(json["photo"]).images.photo.url ?? ""
     );
   }
 

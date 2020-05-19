@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:touristadvisor/constants.dart';
 
 import '../Model/HotelModel.dart';
 
@@ -16,11 +17,10 @@ Future<List<HotelModel>> fetchHotel(http.Client client, String currency,
     "checkin": checkinDate,
     "location_id": locationId.toString() // "277359",
   });
-  var key = "";
 
   final response = await client.get(uri, headers: {
     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-    "x-rapidapi-key": key
+    "x-rapidapi-key": APIKey
   });
 
   return compute(parseHotel, response.body);

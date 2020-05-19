@@ -15,8 +15,6 @@ abstract class ILocationModel {
       this.rating,
       this.isClosed,
       this.locationType});
-
-  goToDetailedView(BuildContext context, int locationId);
 }
 
 enum LocationType { airport, hotel, restaurant, attraction }

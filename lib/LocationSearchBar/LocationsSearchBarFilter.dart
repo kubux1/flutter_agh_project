@@ -38,7 +38,6 @@ class SliderExampleState extends State with AutomaticKeepAliveClientMixin {
             });
           },
         ),
-//          Text("Radius " + _kmRadius.toString() + " km"),
         Text(AdvisorLocalizations.of(context).radius(_kmRadius.toString())),
         CheckboxGroup(
           labels: <String>[
