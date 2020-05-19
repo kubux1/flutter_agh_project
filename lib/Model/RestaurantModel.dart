@@ -4,6 +4,7 @@ import 'package:touristadvisor/DetailView/RestaurantDetails.dart';
 import 'package:touristadvisor/Model/DictionaryEntry.dart';
 import 'package:touristadvisor/Model/LocationModel.dart';
 import 'ILocationModel.dart';
+import 'package:touristadvisor/Model/PhotoModel.dart';
 
 class RestaurantModel extends LocationModel{
   final LocationType locationType = LocationType.restaurant;
@@ -43,28 +44,28 @@ class RestaurantModel extends LocationModel{
         this.distance
       });
 
-  RestaurantModel.example() {
-    id = 17820063;
-    name = "Mister Lai Restaurant";
-    latitude = 12.240815;
-    longitude = 109.19601;
-    numReviews = 51;
-    rating = 3;
-    priceLevel = "\$";
-    price = "\$5 - \$20";
-    phoneNumber = "+84 90 673 80 36";
-    website = "https://www.facebook.com/misterlainhatrang/";
-    photoUrl = "https://media-cdn.tripadvisor.com/media/photo-f/19/66/c7/c0/dimsum-table.jpg";
-    address = "44 Tran Phu AB Central Square, Loc Tho, Nha Trang 650000 Vietnam";
-    email = "reservation.misterlai@gmail.com";
-    cuisine = ["Chinese", "Asian", "Vegan Options"];
-    menu = "https://www.facebook.com/misterlainhatrang/menu/";
-    distance = 10;
-  }
+//  RestaurantModel.example() {
+//    id = 17820063;
+//    name = "Mister Lai Restaurant";
+//    latitude = 12.240815;
+//    longitude = 109.19601;
+//    numReviews = 51;
+//    rating = 3;
+//    priceLevel = "\$";
+//    price = "\$5 - \$20";
+//    phoneNumber = "+84 90 673 80 36";
+//    website = "https://www.facebook.com/misterlainhatrang/";
+//    photoUrl = "https://media-cdn.tripadvisor.com/media/photo-f/19/66/c7/c0/dimsum-table.jpg";
+//    address = "44 Tran Phu AB Central Square, Loc Tho, Nha Trang 650000 Vietnam";
+//    email = "reservation.misterlai@gmail.com";
+//    cuisine = ["Chinese", "Asian", "Vegan Options"];
+//    menu = "https://www.facebook.com/misterlainhatrang/menu/";
+//    distance = 10;
+//  }
 
   factory RestaurantModel.fromJson(Map<String, dynamic> json) {
     return RestaurantModel(
-        id: json['location_id'] as int,
+        id: int.parse(json['location_id']),
         name: json['name'] ?? "",
         latitude: double.parse(json["longitude"] ?? "0"),
         longitude: double.parse(json["longitude"] ?? "0"),
@@ -82,12 +83,4 @@ class RestaurantModel extends LocationModel{
         email: json["email"] ?? "");
   }
 
-  @override
-  goToDetailedView(BuildContext context, int locationId) {
-    //TODO: Get a specific object from API or cache
-    final RestaurantModel restaurantModel = new RestaurantModel.example();
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => RestaurantDetails(restaurantModel)));
-  }
 }

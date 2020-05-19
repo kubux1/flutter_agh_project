@@ -39,12 +39,11 @@ List<LocationModel> parseLocations(map) {
   for (var location in parsed) {
 //    if l
    var locationModel = LocationModel.fromJson(location['result_object']);
-   //if (radius <= locationModel.distance) {
-
-     if(selectedLocations.contains(locationModel.locationType) || selectedLocations.isEmpty) {
-       locationList.add(location['result_object']);
-     }
-   //}
+     if (radius <= locationModel.distance) {
+       if(selectedLocations.contains(locationModel.locationType) || selectedLocations.isEmpty) {
+         locationList.add(location['result_object']);
+       }
+    }
   }
 
 

@@ -9,6 +9,8 @@ import 'package:touristadvisor/DetailView/AttractionDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:touristadvisor/DetailView/HotelDetails.dart';
+import 'package:touristadvisor/DetailView/RestaurantDetails.dart';
+
 import 'package:touristadvisor/Networking/HotelNetworking.dart';
 import 'AirportModel.dart';
 import 'HotelModel.dart';
@@ -49,7 +51,7 @@ class LocationModel implements ILocationModel {
     return LocationModel(
         id: int.parse(json['location_id']),
         name: json['name'] ?? "",
-        distance: (1.0 + 29.0 * Random().nextDouble()),
+        distance: (0.2 + 29.0 * Random().nextDouble()),
         rating: double.parse(json['rating'] ?? 0.0),
         isClosed: json['is_closed'],
         locationType:
@@ -74,24 +76,18 @@ class LocationModel implements ILocationModel {
       case LocationType.restaurant:
         {
           print("pokazujemy restaurant");
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => RestaurantDetails(locationId)));
         }
         break;
 
       case LocationType.hotel:
         {
           print("pokazujemy hotel");
-          var hotel = await fetchHotel(locationId);
           Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HotelDetails(hotel)));
+                      MaterialPageRoute(builder: (context) => HotelDetails(locationId)));
         }
         break;
-
-      case LocationType.restaurant:
-        {
-          print("pokazujemy restaurant");
-        }
-        break;
-
       default:
         {
           print("pokazujemy nie wiem co");
@@ -103,24 +99,28 @@ class LocationModel implements ILocationModel {
 
 LocationType getLocationType(String category) {
   switch (category) {
-    case "hotel":
+    case "Hotels":
+    case "hotel" :
       {
         return LocationType.hotel;
       }
       break;
 
+    case "Attractions":
     case "attraction":
       {
         return LocationType.attraction;
       }
       break;
 
+    case "Restaurants":
     case "restaurant":
       {
         return LocationType.restaurant;
       }
       break;
 
+    case "Airports":
     case "airport":
       {
         return LocationType.airport;

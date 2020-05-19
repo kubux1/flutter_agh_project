@@ -3,25 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:touristadvisor/Model/RestaurantModel.dart';
+import 'package:touristadvisor/Networking/RestaurantNetworking.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class RestaurantDetails extends StatefulWidget {
-  RestaurantModel restaurant;
+  int locationId;
 
-  RestaurantDetails(RestaurantModel restaurant){
-    this.restaurant = restaurant;
+  RestaurantDetails(int locationId){
+    this.locationId = locationId;
   }
 
   @override
-  RestaurantDetailsState createState() => RestaurantDetailsState(restaurant);
+  RestaurantDetailsState createState() => RestaurantDetailsState(locationId);
 }
 
 class RestaurantDetailsState extends State<RestaurantDetails> {
-  RestaurantModel restaurant;
+  RestaurantModel restaurant = null ;
 
-  RestaurantDetailsState(RestaurantModel restaurant) {
-    this.restaurant = restaurant;
+  RestaurantDetailsState(int locationId) {
+   getRestaurant(locationId);
+  }
+
+  Future<void> getRestaurant(int locationId) async{
+//    Locale myLocale = Localizations.localeOf(context);
+
+    restaurant = await fetchRestaurant(locationId,"en_US");
+    setState((){
+
+    });
   }
 
   List<Widget> _buildStars(double count) {
@@ -250,42 +260,55 @@ class RestaurantDetailsState extends State<RestaurantDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(restaurant.name),
-        titleSpacing: 0.0,
-        backgroundColor: Colors.lightBlueAccent,
-        actions: [
-          // action button
-          new IconButton(
-              icon: new Icon(
-                  favouritePressed ? Icons.favorite : Icons.favorite_border,
-                  color: favouritePressed ? Colors.red : null,
-                  size: 30),
-              onPressed: () {
-                setState(() {
-                  pressFavorite();
-//                  _alreadySaved = isSaved(key); //<--update alreadSaved
-                });
-              }),
-        ],
-        leading: IconButton(
-          icon: Icon(Icons.restaurant, size: 24),
-          onPressed: () {},
+    if (restaurant == null) {
+      return new Container(
+        decoration: new BoxDecoration(color: Colors.lightBlueAccent),
+        child: new Center(
+          child: CircularProgressIndicator(),
         ),
-      ),
-      body: SafeArea(
-          child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Center(
-                    child: Column(children: <Widget>[
-                      ratingSection(restaurant.rating, restaurant.numReviews.toString()),
-                      imageSection(restaurant.photoUrl),
-                      detailsSection(restaurant.priceLevel, restaurant.price, restaurant.cuisine, restaurant.menu),
-                      contactSection(restaurant.address, restaurant.phoneNumber, restaurant.website, restaurant.email)
-                    ])),
-              ))),
-    );
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(restaurant.name),
+          titleSpacing: 0.0,
+          backgroundColor: Colors.lightBlueAccent,
+          actions: [
+            // action button
+            new IconButton(
+                icon: new Icon(
+                    favouritePressed ? Icons.favorite : Icons.favorite_border,
+                    color: favouritePressed ? Colors.red : null,
+                    size: 30),
+                onPressed: () {
+                  setState(() {
+                    pressFavorite();
+//                  _alreadySaved = isSaved(key); //<--update alreadSaved
+                  });
+                }),
+          ],
+          leading: IconButton(
+            icon: Icon(Icons.restaurant, size: 24),
+            onPressed: () {},
+          ),
+        ),
+        body: SafeArea(
+            child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Center(
+                      child: Column(children: <Widget>[
+                        ratingSection(restaurant.rating,
+                            restaurant.numReviews.toString()),
+                        imageSection(restaurant.photoUrl),
+                        detailsSection(restaurant.priceLevel, restaurant.price,
+                            restaurant.cuisine, restaurant.menu),
+                        contactSection(
+                            restaurant.address, restaurant.phoneNumber,
+                            restaurant.website, restaurant.email)
+                      ])),
+                ))),
+      );
+    }
   }
 }

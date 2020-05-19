@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
+import 'package:touristadvisor/Locale/I18n.dart';
 import 'package:touristadvisor/Model/AttractionModel.dart';
 import 'package:touristadvisor/Networking/AttractionNetworking.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,11 +23,18 @@ class AttractionDetailsState extends State<AttractionDetails> {
   AttractionModel attraction = null;
 
   AttractionDetailsState(int locationId) {
-    getCheckList(locationId);
+    super.initState();
+    Locale myLocale = Localizations.localeOf(context);
+    print(myLocale.languageCode);
+
+    getAttraction(locationId);
   }
 
-  Future<void> getCheckList(int locationId) async{
-    attraction = await fetchAttractions(locationId);
+  Future<void> getAttraction(int locationId) async{
+
+//    Locale myLocale = Localizations.localeOf(context);
+//    print(myLocale.languageCode);
+    attraction = await fetchAttractions(locationId, "en_US");
     setState((){
 //      attraction = value as Future<AttractionModel>;
     });
@@ -236,8 +244,11 @@ class AttractionDetailsState extends State<AttractionDetails> {
   Widget build(BuildContext context) {
     if (attraction == null) {
 //      backgroundColor: Colors.lightBlueAccent;
-      return Center(
-        child: CircularProgressIndicator(),
+      return new Container(
+        decoration: new BoxDecoration(color: Colors.lightBlueAccent),
+        child: new Center(
+          child: CircularProgressIndicator(),
+        ),
       );
     } else {
       return new Scaffold(

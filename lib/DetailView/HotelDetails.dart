@@ -8,10 +8,10 @@ import '../Model/HotelModel.dart';
 
 // ignore: must_be_immutable
 class HotelDetails extends StatefulWidget {
-  HotelModel hotel;
+  int locationId;
 
-  HotelDetails(HotelModel hotel) {
-    this.hotel = hotel;
+  HotelDetails(int locationId) {
+    this.locationId = locationId;
   }
 
 //  HotelDetails(int locationId) {
@@ -19,24 +19,33 @@ class HotelDetails extends StatefulWidget {
 //  }
 
   @override
-  HotelDetailsState createState() => HotelDetailsState(hotel);
+  HotelDetailsState createState() => HotelDetailsState(locationId);
 }
 
 class HotelDetailsState extends State<HotelDetails> {
-  HotelModel hotel;
+  HotelModel hotel = null;
 
-  HotelDetailsState(HotelModel hotel) {
-    this.hotel = hotel;
+  HotelDetailsState(int locationId) {
+    getHotel(locationId);
   }
 
-  Widget titleSection(hotelName) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(children: <Widget>[
-        Expanded(
-            child: Text(hotelName,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
-        Icon(Icons.favorite_border, size: 40)
-      ]));
+  Future<void> getHotel(int locationId) async{
+//    print(context);
+//    Locale myLocale = Localizations.localeOf(context);
+//    print(myLocale.languageCode);
+    hotel = await fetchHotel(locationId, "en_US");
+    setState((){
+    });
+  }
+
+//  Widget titleSection(hotelName) => Container(
+//      padding: const EdgeInsets.symmetric(vertical: 5),
+//      child: Row(children: <Widget>[
+//        Expanded(
+//            child: Text(hotelName,
+//                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
+//        Icon(Icons.favorite_border, size: 40)
+//      ]));
 
   List<Widget> _buildStars(double count) {
     var list = <Icon>[];
@@ -230,42 +239,55 @@ class HotelDetailsState extends State<HotelDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(hotel.name),
-        titleSpacing: 0.0,
-        backgroundColor: Colors.lightBlueAccent,
-        actions: [
-          // action button
-          new IconButton(
-              icon: new Icon(
-                  favouritePressed ? Icons.favorite : Icons.favorite_border,
-                  color: favouritePressed ? Colors.red : null,
-                  size: 30),
-              onPressed: () {
-                setState(() {
-                  pressFavorite();
-//                  _alreadySaved = isSaved(key); //<--update alreadSaved
-                });
-              }),
-        ],
-        leading: IconButton(
-          icon: Icon(Icons.hotel, size: 24),
-          onPressed: () {},
+    if (hotel == null) {
+//      backgroundColor: Colors.lightBlueAccent;
+      return new Container(
+        decoration: new BoxDecoration(color: Colors.lightBlueAccent),
+        child: new Center(
+          child: CircularProgressIndicator(),
         ),
-      ),
-      body: SafeArea(
-          child: SingleChildScrollView(
-              child: Padding(
-        padding: EdgeInsets.all(15),
-        child: Center(
-            child: Column(children: <Widget>[
-          ratingSection(hotel.rating, hotel.numReviews.toString()),
-          imageSection(hotel.photoUrl),
-          descriptionSection(hotel.description),
-          contactSection(hotel.address, hotel.phone, hotel.website, hotel.email)
-        ])),
-      ))),
-    );
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(hotel.name),
+          titleSpacing: 0.0,
+          backgroundColor: Colors.lightBlueAccent,
+          actions: [
+            // action button
+            new IconButton(
+                icon: new Icon(
+                    favouritePressed ? Icons.favorite : Icons.favorite_border,
+                    color: favouritePressed ? Colors.red : null,
+                    size: 30),
+                onPressed: () {
+                  setState(() {
+                    pressFavorite();
+//                  _alreadySaved = isSaved(key); //<--update alreadSaved
+                  });
+                }),
+          ],
+          leading: IconButton(
+            icon: Icon(Icons.hotel, size: 24),
+            onPressed: () {},
+          ),
+        ),
+        body: SafeArea(
+            child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Center(
+                      child: Column(children: <Widget>[
+                        ratingSection(
+                            hotel.rating, hotel.numReviews.toString()),
+                        imageSection(hotel.photoUrl),
+                        descriptionSection(hotel.description),
+                        contactSection(
+                            hotel.address, hotel.phone, hotel.website,
+                            hotel.email)
+                      ])),
+                ))),
+      );
+    }
   }
 }

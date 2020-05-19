@@ -25,6 +25,7 @@ class LocationsSearchBar extends StatelessWidget {
   }
 
   static onCheckBoxSelected(List<String> selectedParams) {
+    selectedLocations = [];
     for (String str in selectedParams) {
       selectedLocations.add(getLocationType(str));
     }

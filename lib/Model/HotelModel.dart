@@ -81,8 +81,9 @@ class HotelModel extends LocationModel {
   }
 
   factory HotelModel.fromJson(Map<String, dynamic> json) {
+
     return HotelModel(
-        location_id: json['location_id'] as int,
+        location_id: int.parse(json['location_id']),
         name: json['name'] ?? "",
         latitude: double.parse(json["longitude"] ?? "0"),
         longitude: double.parse(json["longitude"] ?? "0"),
@@ -93,7 +94,7 @@ class HotelModel extends LocationModel {
         hotelClass: double.parse(json["hotel_class"] ?? "0"),
         phone: json['phone'] ?? "",
         website: json['website'] ?? "",
-        photoUrl: PhotoModel.fromJson(json["photo"]).images.photo.url ?? "",
+        photoUrl: json['photo']['images']['medium']['url'] ?? "",
         description: json["description"] ?? "",
         address: json["address"] ?? "",
         distance: double.parse(json['distance'] ?? "0.0"),

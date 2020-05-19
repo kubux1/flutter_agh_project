@@ -12,7 +12,7 @@ class LocationsSearchBarFilter extends StatefulWidget {
 }
 
 class SliderExampleState extends State with AutomaticKeepAliveClientMixin {
-  static int _kmRadius = 1;
+  static int _kmRadius = 15;
 
   @override
   bool get wantKeepAlive => true;
