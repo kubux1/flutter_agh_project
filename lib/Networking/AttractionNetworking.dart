@@ -7,9 +7,9 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 
-  Future<AttractionModel> fetchAttractions(String locationId) async {
+  Future<AttractionModel> fetchAttractions(int locationId) async {
     var url = "https://tripadvisor1.p.rapidapi.com/attractions/get-details?location_id=";
-    url += locationId;
+    url += locationId.toString();
 
     final response = await http.get(url, headers: {
       "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",

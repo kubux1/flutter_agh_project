@@ -1,46 +1,28 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
-import 'package:touristadvisor/Model/AttractionModel.dart';
-import 'package:touristadvisor/Networking/AttractionNetworking.dart';
+import 'package:touristadvisor/Model/RestaurantModel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
-class AttractionDetails extends StatefulWidget {
-  int locationId;
+class RestaurantDetails extends StatefulWidget {
+  RestaurantModel restaurant;
 
-  AttractionDetails(int locationId) {
-    this.locationId = locationId;
-
+  RestaurantDetails(RestaurantModel restaurant){
+    this.restaurant = restaurant;
   }
 
   @override
-  AttractionDetailsState createState() => AttractionDetailsState(locationId);
+  RestaurantDetailsState createState() => RestaurantDetailsState(restaurant);
 }
 
-class AttractionDetailsState extends State<AttractionDetails> {
-  AttractionModel attraction = null;
+class RestaurantDetailsState extends State<RestaurantDetails> {
+  RestaurantModel restaurant;
 
-  AttractionDetailsState(int locationId) {
-    getCheckList(locationId);
+  RestaurantDetailsState(RestaurantModel restaurant) {
+    this.restaurant = restaurant;
   }
-
-  Future<void> getCheckList(int locationId) async{
-    attraction = await fetchAttractions(locationId);
-    setState((){
-//      attraction = value as Future<AttractionModel>;
-    });
-  }
-
-
-//  Widget titleSection(attractionName) => Container(
-//      padding: const EdgeInsets.symmetric(vertical: 5),
-//      child: Row(children: <Widget>[
-//        Expanded(
-//            child: Text(attractionName,
-//                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
-//        Icon(Icons.favorite_border, size: 40)
-//      ]));
 
   List<Widget> _buildStars(double count) {
     var list = <Icon>[];
@@ -57,28 +39,6 @@ class AttractionDetailsState extends State<AttractionDetails> {
     }
     return list;
   }
-
-  Widget ratingSection (rating, reviews) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(children: <Widget>[
-        ..._buildStars(rating),
-        SizedBox(width: 10),
-        Text(reviews),
-        Text(' Reviews')
-      ]));
-
-  Widget imageSection(url) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Image.network(url));
-
-  Widget descriptionSection(descriptionText) => Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          descriptionText,
-          softWrap: true,
-          textAlign: TextAlign.justify,
-        ),
-      );
 
   RichText _createLink(String linkUrl, {String linkText = ''}) {
     if (linkText == '') {
@@ -186,15 +146,71 @@ class AttractionDetailsState extends State<AttractionDetails> {
     );
   }
 
+//  Sections  -------------------------------------------------------
+
+  Widget ratingSection (rating, reviews) => Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(children: <Widget>[
+        ..._buildStars(rating),
+        SizedBox(width: 10),
+        Text(reviews),
+        Text(' Reviews')
+      ]));
+
+  Widget imageSection(url) => Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Image.network(url)
+  );
+
+  Widget detailsSection(priceLevel, price, List<String> cuisine, menu) => Container(
+//      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: Column(children: <Widget>[
+        Divider(height: 50, thickness: 2),
+        Row(children: <Widget>[
+          Text(
+              'Details',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, )
+          )
+        ]),
+        SizedBox(height: 15),
+        ListView(shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              ListTile(
+                  title: Text('Price level:'),
+                  subtitle: Text(priceLevel),
+                  dense: true
+              ),
+              ListTile(
+                  title: Text('Price range: '),
+                  subtitle: Text(price),
+                  dense: true
+              ),
+              ListTile(
+                title: Text('Cuisine:'),
+                subtitle: Text(cuisine.join(", ")),
+                dense: true
+              ),
+              ListTile(
+                  leading: Icon(Icons.restaurant_menu),
+                  title: Text('Menu'),
+                  subtitle: _createLink(menu, linkText: 'Click here'),
+                  dense: true
+              )
+            ])
+      ])
+  );
+
   Widget contactSection(address, phone, website, email) => Container(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Column(children: <Widget>[
         Divider(height: 50, thickness: 2),
         Row(children: <Widget>[
           Text(
-              'Location & Contact',
-              textAlign: TextAlign.left,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, )
+            'Location & Contact',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, )
           )
         ]),
         SizedBox(height: 15),
@@ -234,52 +250,42 @@ class AttractionDetailsState extends State<AttractionDetails> {
 
   @override
   Widget build(BuildContext context) {
-    if (attraction == null) {
-//      backgroundColor: Colors.lightBlueAccent;
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else {
-      return new Scaffold(
-        appBar: AppBar(
-          title: Text(attraction.name ?? "Attraction"),
-          titleSpacing: 0.0,
-          backgroundColor: Colors.lightBlueAccent,
-          actions: [
-            // action button
-            new IconButton(
-                icon: new Icon(
-                    favouritePressed ? Icons.favorite : Icons.favorite_border,
-                    color: favouritePressed ? Colors.red : null,
-                    size: 30),
-                onPressed: () {
-                  setState(() {
-                    pressFavorite();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(restaurant.name),
+        titleSpacing: 0.0,
+        backgroundColor: Colors.lightBlueAccent,
+        actions: [
+          // action button
+          new IconButton(
+              icon: new Icon(
+                  favouritePressed ? Icons.favorite : Icons.favorite_border,
+                  color: favouritePressed ? Colors.red : null,
+                  size: 30),
+              onPressed: () {
+                setState(() {
+                  pressFavorite();
 //                  _alreadySaved = isSaved(key); //<--update alreadSaved
-                  });
-                }),
-          ],
-          leading: IconButton(
-            icon: Icon(Icons.account_balance, size: 24),
-            onPressed: () {},
-          ),
+                });
+              }),
+        ],
+        leading: IconButton(
+          icon: Icon(Icons.restaurant, size: 24),
+          onPressed: () {},
         ),
-        body: SafeArea(
-            child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Center(
-                      child: Column(children: <Widget>[
-                        ratingSection(attraction.rating,
-                            attraction.numReviews.toString()),
-                        imageSection(attraction.photoUrl ?? ""),
-                        descriptionSection(attraction.description ?? ""),
-                        contactSection(
-                            attraction.address, attraction.phoneNumber,
-                            attraction.website, attraction.email)
-                      ])),
-                ))),
-      );
-    }
+      ),
+      body: SafeArea(
+          child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Center(
+                    child: Column(children: <Widget>[
+                      ratingSection(restaurant.rating, restaurant.numReviews.toString()),
+                      imageSection(restaurant.photoUrl),
+                      detailsSection(restaurant.priceLevel, restaurant.price, restaurant.cuisine, restaurant.menu),
+                      contactSection(restaurant.address, restaurant.phoneNumber, restaurant.website, restaurant.email)
+                    ])),
+              ))),
+    );
   }
 }

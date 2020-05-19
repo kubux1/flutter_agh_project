@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:touristadvisor/DetailView/AirportDetails.dart';
 import 'package:touristadvisor/DetailView/AttractionDetails.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -64,6 +65,8 @@ class LocationModel implements ILocationModel {
           // TODO: Przejsc do szczegolowego widoku
           //    Navigator.push(context,
           //        MaterialPageRoute(builder: (context) => AirportDetails(airportModel)));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AttractionDetails(locationId)));
           print("pokazujemy attraction");
         }
         break;
