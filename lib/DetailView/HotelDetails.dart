@@ -41,11 +41,16 @@ class HotelDetailsState extends State<HotelDetails> {
     if (count - count.floorToDouble() != 0.0) {
       list.add(Icon(Icons.star_half));
     }
+    if(list.length < 5){
+      for(var i = list.length; i < 5; i++ ){
+        list.add(Icon(Icons.star_border));
+      }
+    }
     return list;
   }
 
   Widget ratingSection(rating, reviews) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(children: <Widget>[
         ..._buildStars(rating),
         SizedBox(width: 10),
@@ -162,6 +167,15 @@ class HotelDetailsState extends State<HotelDetails> {
   Widget contactSection(address, phone, website, email) => Container(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Column(children: <Widget>[
+        Divider(height: 50, thickness: 2),
+        Row(children: <Widget>[
+          Text(
+              'Location & Contact',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, )
+          )
+        ]),
+        SizedBox(height: 15),
         Row(children: <Widget>[
           Icon(Icons.location_on),
           SizedBox(width: 10),

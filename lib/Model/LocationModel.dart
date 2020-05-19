@@ -4,9 +4,11 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'AttractionModel.dart';
 import 'AirportModel.dart';
 import 'HotelModel.dart';
 import 'ILocationModel.dart';
+import 'RestaurantModel.dart';
 
 class LocationModel implements ILocationModel {
   final int id;
@@ -64,8 +66,12 @@ Future<List<LocationModel>> loadLocations(
 
   final AirportModel airportModel = new AirportModel.example();
   final HotelModel hotelModel = new HotelModel.example();
+  final AttractionModel attractionModel = new AttractionModel.example();
+  final RestaurantModel restaurantModel = new RestaurantModel.example();
   locations.add(hotelModel);
   locations.add(airportModel);
+  locations.add(attractionModel);
+  locations.add(restaurantModel);
 
-  return locations;
+  return locations.reversed.toList();
 }

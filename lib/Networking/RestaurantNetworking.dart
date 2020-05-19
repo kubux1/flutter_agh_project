@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-import '../Model/AttractionModel.dart';
+import '../Model/RestaurantModel.dart';
 
-Future<List<AttractionModel>> fetchAttractions(http.Client client, int locationId) async {
-  var uri = Uri.https("tripadvisor1.p.rapidapi.com", "/attractions/get-details", {
+Future<List<RestaurantModel>> fetchAttractions(http.Client client, int locationId) async {
+  var uri = Uri.https("tripadvisor1.p.rapidapi.com", "/restaurants/get-details", {
     "location_id": locationId.toString() // "293928",
   });
   var key = "";
@@ -17,14 +17,14 @@ Future<List<AttractionModel>> fetchAttractions(http.Client client, int locationI
     "x-rapidapi-key": key
   });
 
-  return compute(parseAttractions, response.body);
+  return compute(parseRestaurants, response.body);
 }
 
-List<AttractionModel> parseAttractions(String responseBody) {
+List<RestaurantModel> parseRestaurants(String responseBody) {
   var data = json.decode(responseBody);
   var parsed = data["data"] as List;
 
   return parsed
-      .map<AttractionModel>((json) => AttractionModel.fromJson(json))
+      .map<RestaurantModel>((json) => RestaurantModel.fromJson(json))
       .toList();
 }

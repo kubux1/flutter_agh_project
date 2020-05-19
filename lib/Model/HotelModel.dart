@@ -99,7 +99,7 @@ class HotelModel extends LocationModel {
         photoUrl: json['photo']['images']['medium']['url'] ?? "",
         description: json["description"] ?? "",
         address: json["address"] ?? "",
-        distance: double.parse(json['distance'] ?? 0.0),
+        distance: double.parse(json['distance'] ?? "0.0"),
         email: json["email"] ?? "");
   }
 
