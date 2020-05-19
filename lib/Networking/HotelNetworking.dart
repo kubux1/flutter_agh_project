@@ -34,9 +34,9 @@ List<HotelModel> parseHotels(String responseBody) {
   return parsed.map<HotelModel>((json) => HotelModel.fromJson(json)).toList();
 }
 
-Future<HotelModel> fetchHotel(String locationId) async {
+Future<HotelModel> fetchHotel(int locationId) async {
   var url = "https://tripadvisor1.p.rapidapi.com/hotels/get-details?location_id=";
-  url += locationId;
+  url += locationId.toString();
 
   final response = await http.get(url, headers: {
     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",

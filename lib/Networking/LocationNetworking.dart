@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 
-Future<List<LocationModel>> fetchLocations(String query, String selectedLocation, int radius ) async {
+Future<List<LocationModel>> fetchLocations(String query, List<LocationType> selectedLocation, int radius ) async {
   var url = "https://tripadvisor1.p.rapidapi.com/locations/search?query=";
   url += query;
   final response = await http.get(url, headers: {
@@ -38,13 +38,13 @@ List<LocationModel> parseLocations(map) {
   List<dynamic> locationList = new List<dynamic>(); // json response is ['data'][0]['result_object']
   for (var location in parsed) {
 //    if l
-   var locationModel = location['result_object'] as LocationModel;
-   if (radius <= locationModel.distance) {
+   var locationModel = LocationModel.fromJson(location['result_object']);
+   //if (radius <= locationModel.distance) {
 
      if(selectedLocations.contains(locationModel.locationType) || selectedLocations.isEmpty) {
        locationList.add(location['result_object']);
      }
-   }
+   //}
   }
 
 

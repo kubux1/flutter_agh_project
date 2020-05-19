@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:touristadvisor/DetailView/AirportDetails.dart';
 import 'package:touristadvisor/Model/LocationModel.dart';
 
 import 'ILocationModel.dart';
@@ -70,14 +67,5 @@ class AirportModel extends LocationModel {
         parent_code: json['parent_code'] ?? "",
         distance: double.parse(json['distance'] ?? 0.0),
         rating: double.parse(json['rating'] ?? 0.0));
-  }
-
-  @override
-  goToDetailedView(BuildContext context, int locationId) {
-    //TODO: Get a specific object from API or cache
-    final AirportModel airportModel = new AirportModel.example();
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AirportDetails(airportModel)));
   }
 }

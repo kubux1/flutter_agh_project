@@ -1,3 +1,3 @@
 library constants;
 
-const String APIKey= "Tu swoje";
+const String APIKey= "";
