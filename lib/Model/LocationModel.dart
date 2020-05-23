@@ -68,5 +68,5 @@ Future<List<LocationModel>> loadLocations(
   locations.add(hotelModel);
   locations.add(airportModel);
 
-  return locations;
+  return locations.reversed.toList();
 }

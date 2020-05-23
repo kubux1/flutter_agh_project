@@ -10,20 +10,20 @@ import 'package:moor_ffi/moor_ffi.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:touristadvisor/Favorites/Attractions/FavoriteAttractionsDao.dart';
+import 'package:touristadvisor/Favorites/Hotels/FavoriteHotels.dart';
 
 import 'Attractions/FavoriteAttractions.dart';
+import 'Hotels/FavoriteHotelsDao.dart';
 
 part 'FavoritesDB.g.dart';
 
-@UseMoor(tables: [FavoriteAttractions], daos: [FavoriteAttractionsDao])
+@UseMoor(tables: [FavoriteAttractions, FavoriteHotels], daos: [FavoriteAttractionsDao, FavoriteHotelsDao])
 class FavoritesDB extends _$FavoritesDB {
   FavoritesDB() : super(_openConnection());
   FavoritesDB.withQueryExecutor(QueryExecutor e) : super(e);
 
   @override
-  int get schemaVersion => 2;
-
-
+  int get schemaVersion => 4;
 }
 
 LazyDatabase _openConnection() {

@@ -1,6 +1,5 @@
 import 'package:moor/moor.dart';
 import 'package:touristadvisor/Favorites/FavoritesDB.dart';
-import 'package:touristadvisor/Model/AttractionModel.dart';
 
 import 'FavoriteAttractions.dart';
 

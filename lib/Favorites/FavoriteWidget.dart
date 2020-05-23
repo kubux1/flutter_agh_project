@@ -4,19 +4,21 @@ import 'package:touristadvisor/Favorites/Command.dart';
 class FavoriteWidget extends StatefulWidget {
   final VoidCallback onAdd;
   final VoidCallback onRemove;
+  final bool checked;
 
-  const FavoriteWidget({Key key, this.onAdd, this.onRemove}) : super(key: key);
+  const FavoriteWidget({Key key, this.onAdd, this.onRemove, this
+  .checked}) : super(key: key);
 
   @override
-  _FavoriteWidgetState createState() => _FavoriteWidgetState(onAdd, onRemove);
+  _FavoriteWidgetState createState() => _FavoriteWidgetState(onAdd, onRemove, checked);
 }
 
 class _FavoriteWidgetState extends State<FavoriteWidget> {
-  bool _isFavorite = false;
+  bool _isFavorite;
   final VoidCallback _onAdd;
   final VoidCallback _onRemove;
 
-  _FavoriteWidgetState(this._onAdd, this._onRemove);
+  _FavoriteWidgetState(this._onAdd, this._onRemove, this._isFavorite);
 
   void _toggleFavorite() {
     setState(() {
@@ -44,8 +46,8 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          icon: (_isFavorite ? Icon(Icons.favorite) : Icon(Icons.favorite_border)),
-          color: (_isFavorite ? Colors.red : Colors.black),
+          icon: (_isFavorite ? Icon(Icons.favorite, size: 30) : Icon(Icons.favorite_border, size: 30)),
+          color: (_isFavorite ? Colors.red : Colors.white),
           onPressed: _toggleFavorite,
         ),
       ],
