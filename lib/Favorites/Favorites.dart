@@ -57,6 +57,6 @@ class Favorites extends StatelessWidget{
     );
 
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => HotelDetails(hotelModel)));
+      MaterialPageRoute(builder: (context) => HotelDetails(hotelModel.location_id)));
   }
 }

@@ -17,7 +17,12 @@ class FavoriteHotelsDao extends DatabaseAccessor<FavoritesDB> with _$FavoriteHot
   Stream<List<FavoriteHotel>> get watchAll =>
       select(favoriteHotels).watch();
 
-  Future<bool> getByByLocationId(int id) =>
+  Future<FavoriteHotel> getByLocationId(int id) =>
+      (select(favoriteHotels)
+      ..where((e) => e.location_id.equals(id)))
+        .getSingle();
+
+  Future<bool> exists(int id) =>
       (select(favoriteHotels)
       ..where((e) => e.location_id.equals(id)))
       .getSingle().then((value) => value != null);

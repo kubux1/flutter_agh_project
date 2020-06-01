@@ -19,11 +19,15 @@ part 'FavoritesDB.g.dart';
 
 @UseMoor(tables: [FavoriteAttractions, FavoriteHotels], daos: [FavoriteAttractionsDao, FavoriteHotelsDao])
 class FavoritesDB extends _$FavoritesDB {
-  FavoritesDB() : super(_openConnection());
-  FavoritesDB.withQueryExecutor(QueryExecutor e) : super(e);
+  FavoritesDB() : super(_openConnection()) {
+    moorRuntimeOptions.dontWarnAboutMultipleDatabases = true;
+  }
+  FavoritesDB.withQueryExecutor(QueryExecutor e) : super(e) {
+    moorRuntimeOptions.dontWarnAboutMultipleDatabases = true;
+  }
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 1;
 }
 
 LazyDatabase _openConnection() {

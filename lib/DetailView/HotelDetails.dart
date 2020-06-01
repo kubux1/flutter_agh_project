@@ -18,10 +18,6 @@ class HotelDetails extends StatefulWidget {
     this.locationId = locationId;
   }
 
-//  HotelDetails(int locationId) {
-//    this.hotel = fetchHotel(locationId);
-//  }
-
   @override
   HotelDetailsState createState() => HotelDetailsState(locationId);
 }
@@ -37,7 +33,30 @@ class HotelDetailsState extends State<HotelDetails> {
 //    print(context);
 //    Locale myLocale = Localizations.localeOf(context);
 //    print(myLocale.languageCode);
-    hotel = await fetchHotel(locationId, "en_US");
+    final db = FavoritesDB();
+    final data = await db.favoriteHotelsDao.getByLocationId(locationId);
+    if(data != null){
+      hotel = new HotelModel(
+        location_id: data.location_id,
+        name: data.name,
+        latitude: data.latitude,
+        longitude: data.longitude,
+        rating: data.rating,
+        price: data.price,
+        priceLevel: data.priceLevel,
+        hotelClass: data.hotelClass,
+        numReviews: data.numReviews,
+        phone: data.phone,
+        website: data.website,
+        photoUrl: data.photoUrl,
+        description: data.description,
+        address: data.address,
+        email: data.email,
+        distance: data.distance,
+      );
+    }else{
+      hotel = await fetchHotel(locationId, "en_US");
+    }
     setState((){
     });
   }
@@ -260,7 +279,7 @@ class HotelDetailsState extends State<HotelDetails> {
           backgroundColor: Colors.lightBlueAccent,
           actions: [
             FutureBuilder<bool>(
-              future: db.favoriteHotelsDao.getByByLocationId(hotel.location_id),
+              future: db.favoriteHotelsDao.exists(hotel.location_id),
               builder:  (BuildContext context, AsyncSnapshot<bool> snapshot){
                 if (snapshot.hasData) {
                   return FavoriteWidget(
