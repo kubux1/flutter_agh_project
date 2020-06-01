@@ -3,10 +3,29 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:touristadvisor/DetailView/AirportDetails.dart';
+import 'package:touristadvisor/DetailView/AttractionDetails.dart';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:touristadvisor/DetailView/HotelDetails.dart';
+import 'package:touristadvisor/DetailView/RestaurantDetails.dart';
+
+import 'package:touristadvisor/Networking/HotelNetworking.dart';
 import 'AirportModel.dart';
 import 'HotelModel.dart';
 import 'ILocationModel.dart';
+
+class CategoryModel {
+  final String key;
+  final String name;
+
+  CategoryModel({this.key, this.name});
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(name: json['name'] ?? "", key: json['key'] ?? "");
+  }
+}
 
 class LocationModel implements ILocationModel {
   final int id;
@@ -17,28 +36,103 @@ class LocationModel implements ILocationModel {
   bool isFavourite = false;
   final LocationType locationType;
 
-  LocationModel(
-      {this.id,
-      this.name,
-      this.distance,
-      this.rating,
-      this.isClosed,
-      this.locationType});
+//  final CategoryModel category;
+
+  LocationModel({
+    this.id,
+    this.name,
+    this.distance,
+    this.rating,
+    this.isClosed,
+    this.locationType,
+//      this.categoryModel
+  });
 
   factory LocationModel.fromJson(Map<String, dynamic> json) {
     return LocationModel(
         id: int.parse(json['location_id']),
         name: json['name'] ?? "",
-        distance: (1.0 + 29.0 * Random().nextDouble()),
+        distance: (0.2 + 29.0 * Random().nextDouble()),
         rating: double.parse(json['rating'] ?? 0.0),
         isClosed: json['is_closed'],
-        locationType: LocationType.attraction);
+        locationType:
+            getLocationType(CategoryModel.fromJson(json['category']).key));
+//        category
   }
 
-  @override
-  goToDetailedView(BuildContext context, int locationId) {
-    // TODO: implement goToDetailedView
-    throw UnimplementedError();
+  showDetails(LocationType locationType, int locationId, BuildContext context) async {
+    switch (locationType) {
+      case LocationType.attraction:
+        {
+          //TODO: Pobrac szczegolowy widok dla zadanego "locationId"
+          // TODO: Przejsc do szczegolowego widoku
+          //    Navigator.push(context,
+          //        MaterialPageRoute(builder: (context) => AirportDetails(airportModel)));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AttractionDetails(locationId)));
+          print("pokazujemy attraction");
+        }
+        break;
+
+      case LocationType.restaurant:
+        {
+          print("pokazujemy restaurant");
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => RestaurantDetails(locationId)));
+        }
+        break;
+
+      case LocationType.hotel:
+        {
+          print("pokazujemy hotel");
+          Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HotelDetails(locationId)));
+        }
+        break;
+      default:
+        {
+          print("pokazujemy nie wiem co");
+        }
+        break;
+    }
+  }
+}
+
+LocationType getLocationType(String category) {
+  switch (category) {
+    case "Hotels":
+    case "hotel" :
+      {
+        return LocationType.hotel;
+      }
+      break;
+
+    case "Attractions":
+    case "attraction":
+      {
+        return LocationType.attraction;
+      }
+      break;
+
+    case "Restaurants":
+    case "restaurant":
+      {
+        return LocationType.restaurant;
+      }
+      break;
+
+    case "Airports":
+    case "airport":
+      {
+        return LocationType.airport;
+      }
+      break;
+
+    default:
+      {
+        return LocationType.attraction;
+      }
+      break;
   }
 }
 
@@ -48,7 +142,7 @@ Future<String> _loadLocationsAsset() async {
 }
 
 Future<List<LocationModel>> loadLocations(
-    List<String> selectedLocations, int kmRadius) async {
+    List<LocationType> selectedLocations, int kmRadius) async {
   String jsonLocationsOverall = await _loadLocationsAsset();
   var data = jsonDecode(jsonLocationsOverall);
   var parsed = data["data"] as List;
@@ -59,14 +153,17 @@ Future<List<LocationModel>> loadLocations(
     locationList.add(location['result_object']);
   }
 
+// List<LocationModel> locations = await locationList
+  //  .map<LocationModel>((json) => LocationModel.fromJson(json))
+  //    .toList();
+
+//  final AirportModel airportModel = new AirportModel.example();
+  //final HotelModel hotelModel = new HotelModel.example();
+  //locations.add(hotelModel);
+//  locations.add(airportModel);
+
   List<LocationModel> locations = await locationList
       .map<LocationModel>((json) => LocationModel.fromJson(json))
       .toList();
-
-  final AirportModel airportModel = new AirportModel.example();
-  final HotelModel hotelModel = new HotelModel.example();
-  locations.add(hotelModel);
-  locations.add(airportModel);
-
-  return locations.reversed.toList();
+  return locations;
 }

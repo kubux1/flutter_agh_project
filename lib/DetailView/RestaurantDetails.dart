@@ -1,62 +1,45 @@
-import 'package:flutter/gestures.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:touristadvisor/Favorites/FavoriteWidget.dart';
-import 'package:touristadvisor/Favorites/FavoritesDB.dart';
-import 'package:touristadvisor/Favorites/Hotels/AddFavoriteHotelCommand.dart';
-import 'package:touristadvisor/Networking/HotelNetworking.dart';
+import 'package:flutter/gestures.dart';
+import 'package:touristadvisor/Model/RestaurantModel.dart';
+import 'package:touristadvisor/Networking/RestaurantNetworking.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../Model/HotelModel.dart';
-
 // ignore: must_be_immutable
-class HotelDetails extends StatefulWidget {
+class RestaurantDetails extends StatefulWidget {
   int locationId;
 
-  HotelDetails(int locationId) {
+  RestaurantDetails(int locationId){
     this.locationId = locationId;
   }
 
-//  HotelDetails(int locationId) {
-//    this.hotel = fetchHotel(locationId);
-//  }
-
   @override
-  HotelDetailsState createState() => HotelDetailsState(locationId);
+  RestaurantDetailsState createState() => RestaurantDetailsState(locationId);
 }
 
-class HotelDetailsState extends State<HotelDetails> {
-  HotelModel hotel = null;
+class RestaurantDetailsState extends State<RestaurantDetails> {
+  RestaurantModel restaurant = null ;
 
-  HotelDetailsState(int locationId) {
-    getHotel(locationId);
+  RestaurantDetailsState(int locationId) {
+   getRestaurant(locationId);
   }
 
-  Future<void> getHotel(int locationId) async{
-//    print(context);
+  Future<void> getRestaurant(int locationId) async{
 //    Locale myLocale = Localizations.localeOf(context);
-//    print(myLocale.languageCode);
-    hotel = await fetchHotel(locationId, "en_US");
+
+    restaurant = await fetchRestaurant(locationId,"en_US");
     setState((){
+
     });
   }
 
-//  Widget titleSection(hotelName) => Container(
-//      padding: const EdgeInsets.symmetric(vertical: 5),
-//      child: Row(children: <Widget>[
-//        Expanded(
-//            child: Text(hotelName,
-//                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
-//        Icon(Icons.favorite_border, size: 40)
-//      ]));
-
   List<Widget> _buildStars(double count) {
     var list = <Icon>[];
-    for (var i = 0; i < count.floor(); i++) {
+    for (var i = 0; i < count.floor(); i++){
       list.add(Icon(Icons.star));
     }
-    if (count - count.floorToDouble() != 0.0) {
+    if(count - count.floor().toDouble() != 0.0){
       list.add(Icon(Icons.star_half));
     }
     if(list.length < 5){
@@ -66,15 +49,6 @@ class HotelDetailsState extends State<HotelDetails> {
     }
     return list;
   }
-
-  Widget ratingSection(rating, reviews) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(children: <Widget>[
-        ..._buildStars(rating),
-        SizedBox(width: 10),
-        Text(reviews),
-        Text(' Reviews')
-      ]));
 
   RichText _createLink(String linkUrl, {String linkText = ''}) {
     if (linkText == '') {
@@ -182,15 +156,71 @@ class HotelDetailsState extends State<HotelDetails> {
     );
   }
 
+//  Sections  -------------------------------------------------------
+
+  Widget ratingSection (rating, reviews) => Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(children: <Widget>[
+        ..._buildStars(rating),
+        SizedBox(width: 10),
+        Text(reviews),
+        Text(' Reviews')
+      ]));
+
+  Widget imageSection(url) => Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Image.network(url)
+  );
+
+  Widget detailsSection(priceLevel, price, List<String> cuisine, menu) => Container(
+//      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: Column(children: <Widget>[
+        Divider(height: 50, thickness: 2),
+        Row(children: <Widget>[
+          Text(
+              'Details',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, )
+          )
+        ]),
+        SizedBox(height: 15),
+        ListView(shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              ListTile(
+                  title: Text('Price level:'),
+                  subtitle: Text(priceLevel),
+                  dense: true
+              ),
+              ListTile(
+                  title: Text('Price range: '),
+                  subtitle: Text(price),
+                  dense: true
+              ),
+              ListTile(
+                title: Text('Cuisine:'),
+                subtitle: Text(cuisine.join(", ")),
+                dense: true
+              ),
+              ListTile(
+                  leading: Icon(Icons.restaurant_menu),
+                  title: Text('Menu'),
+                  subtitle: _createLink(menu, linkText: 'Click here'),
+                  dense: true
+              )
+            ])
+      ])
+  );
+
   Widget contactSection(address, phone, website, email) => Container(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Column(children: <Widget>[
         Divider(height: 50, thickness: 2),
         Row(children: <Widget>[
           Text(
-              'Location & Contact',
-              textAlign: TextAlign.left,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, )
+            'Location & Contact',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, )
           )
         ]),
         SizedBox(height: 15),
@@ -199,38 +229,25 @@ class HotelDetailsState extends State<HotelDetails> {
           SizedBox(width: 10),
           Flexible(child: _createMapsLink(address))
         ]),
-        SizedBox(height: 8),
+        SizedBox(height: 15),
         Row(children: <Widget>[
           Icon(Icons.phone),
           SizedBox(width: 10),
           Flexible(child: _createCallerLink(phone))
         ]),
-        SizedBox(height: 8),
+        SizedBox(height: 15),
         Row(children: <Widget>[
           Icon(Icons.laptop),
           SizedBox(width: 10),
           Flexible(child: _createLink(website, linkText: ''))
         ]),
-        SizedBox(height: 8),
+        SizedBox(height: 15),
         Row(children: <Widget>[
           Icon(Icons.mail_outline),
           SizedBox(width: 10),
           Flexible(child: _createMailLink(email, linkText: ''))
         ])
       ]));
-
-  Widget imageSection(url) => Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Image.network(url));
-
-  Widget descriptionSection(descriptionText) => Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          descriptionText,
-          softWrap: true,
-          textAlign: TextAlign.justify,
-        ),
-      );
 
   bool favouritePressed = false;
 
@@ -243,8 +260,7 @@ class HotelDetailsState extends State<HotelDetails> {
 
   @override
   Widget build(BuildContext context) {
-    if (hotel == null) {
-//      backgroundColor: Colors.lightBlueAccent;
+    if (restaurant == null) {
       return new Container(
         decoration: new BoxDecoration(color: Colors.lightBlueAccent),
         child: new Center(
@@ -252,32 +268,27 @@ class HotelDetailsState extends State<HotelDetails> {
         ),
       );
     } else {
-      final db = Provider.of<FavoritesDB>(context);
       return Scaffold(
         appBar: AppBar(
-          title: Text(hotel.name),
+          title: Text(restaurant.name),
           titleSpacing: 0.0,
           backgroundColor: Colors.lightBlueAccent,
           actions: [
-            FutureBuilder<bool>(
-              future: db.favoriteHotelsDao.getByByLocationId(hotel.location_id),
-              builder:  (BuildContext context, AsyncSnapshot<bool> snapshot){
-                if (snapshot.hasData) {
-                  return FavoriteWidget(
-                      checked: snapshot.data,
-                      onAdd: () => AddFavoriteHotelCommand(db, hotel).execute(),
-                      onRemove: () => {
-                        db.favoriteHotelsDao
-                            .deleteByLocationId(hotel.location_id)
-                      });
-                } else {
-                  return Container();
-                }
-              },
-            )
+            // action button
+            new IconButton(
+                icon: new Icon(
+                    favouritePressed ? Icons.favorite : Icons.favorite_border,
+                    color: favouritePressed ? Colors.red : null,
+                    size: 30),
+                onPressed: () {
+                  setState(() {
+                    pressFavorite();
+//                  _alreadySaved = isSaved(key); //<--update alreadSaved
+                  });
+                }),
           ],
           leading: IconButton(
-            icon: Icon(Icons.hotel, size: 24),
+            icon: Icon(Icons.restaurant, size: 24),
             onPressed: () {},
           ),
         ),
@@ -287,13 +298,14 @@ class HotelDetailsState extends State<HotelDetails> {
                   padding: EdgeInsets.all(15),
                   child: Center(
                       child: Column(children: <Widget>[
-                        ratingSection(
-                            hotel.rating, hotel.numReviews.toString()),
-                        imageSection(hotel.photoUrl),
-                        descriptionSection(hotel.description),
+                        ratingSection(restaurant.rating,
+                            restaurant.numReviews.toString()),
+                        imageSection(restaurant.photoUrl),
+                        detailsSection(restaurant.priceLevel, restaurant.price,
+                            restaurant.cuisine, restaurant.menu),
                         contactSection(
-                            hotel.address, hotel.phone, hotel.website,
-                            hotel.email)
+                            restaurant.address, restaurant.phoneNumber,
+                            restaurant.website, restaurant.email)
                       ])),
                 ))),
       );
