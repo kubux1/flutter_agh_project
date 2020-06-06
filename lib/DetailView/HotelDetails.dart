@@ -1,6 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:touristadvisor/Favorites/FavoriteWidget.dart';
+import 'package:touristadvisor/Favorites/FavoritesDB.dart';
+import 'package:touristadvisor/Favorites/Hotels/AddFavoriteHotelCommand.dart';
 import 'package:touristadvisor/Networking/HotelNetworking.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,10 +17,6 @@ class HotelDetails extends StatefulWidget {
   HotelDetails(int locationId) {
     this.locationId = locationId;
   }
-
-//  HotelDetails(int locationId) {
-//    this.hotel = fetchHotel(locationId);
-//  }
 
   @override
   HotelDetailsState createState() => HotelDetailsState(locationId);
@@ -33,7 +33,30 @@ class HotelDetailsState extends State<HotelDetails> {
 //    print(context);
 //    Locale myLocale = Localizations.localeOf(context);
 //    print(myLocale.languageCode);
-    hotel = await fetchHotel(locationId, "en_US");
+    final db = FavoritesDB();
+    final data = await db.favoriteHotelsDao.getByLocationId(locationId);
+    if(data != null){
+      hotel = new HotelModel(
+        location_id: data.location_id,
+        name: data.name,
+        latitude: data.latitude,
+        longitude: data.longitude,
+        rating: data.rating,
+        price: data.price,
+        priceLevel: data.priceLevel,
+        hotelClass: data.hotelClass,
+        numReviews: data.numReviews,
+        phone: data.phone,
+        website: data.website,
+        photoUrl: data.photoUrl,
+        description: data.description,
+        address: data.address,
+        email: data.email,
+        distance: data.distance,
+      );
+    }else{
+      hotel = await fetchHotel(locationId, "en_US");
+    }
     setState((){
     });
   }
@@ -248,24 +271,29 @@ class HotelDetailsState extends State<HotelDetails> {
         ),
       );
     } else {
+      final db = Provider.of<FavoritesDB>(context);
       return Scaffold(
         appBar: AppBar(
           title: Text(hotel.name),
           titleSpacing: 0.0,
           backgroundColor: Colors.lightBlueAccent,
           actions: [
-            // action button
-            new IconButton(
-                icon: new Icon(
-                    favouritePressed ? Icons.favorite : Icons.favorite_border,
-                    color: favouritePressed ? Colors.red : null,
-                    size: 30),
-                onPressed: () {
-                  setState(() {
-                    pressFavorite();
-//                  _alreadySaved = isSaved(key); //<--update alreadSaved
-                  });
-                }),
+            FutureBuilder<bool>(
+              future: db.favoriteHotelsDao.exists(hotel.location_id),
+              builder:  (BuildContext context, AsyncSnapshot<bool> snapshot){
+                if (snapshot.hasData) {
+                  return FavoriteWidget(
+                      checked: snapshot.data,
+                      onAdd: () => AddFavoriteHotelCommand(db, hotel).execute(),
+                      onRemove: () => {
+                        db.favoriteHotelsDao
+                            .deleteByLocationId(hotel.location_id)
+                      });
+                } else {
+                  return Container();
+                }
+              },
+            )
           ],
           leading: IconButton(
             icon: Icon(Icons.hotel, size: 24),

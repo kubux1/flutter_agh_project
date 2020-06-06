@@ -33,6 +33,7 @@ class LocationModel implements ILocationModel {
   final double distance;
   final double rating;
   final bool isClosed;
+  bool isFavourite = false;
   final LocationType locationType;
 
 //  final CategoryModel category;

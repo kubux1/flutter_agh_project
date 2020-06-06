@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:touristadvisor/Favorites/FavoritesDB.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'Favorites/Favorites.dart';
 import 'Locale/I18n.dart';
 import 'LocationSearchBar/LocationsSearchBar.dart';
 import 'LocationSearchBar/LocationsSearchBarFilter.dart';
+
+void main() {
+  runApp(
+      Provider<FavoritesDB>(
+        create: (context) => FavoritesDB(),
+        child: MyApp(),
+        dispose: (context, db) => db.close(),
+      )
+  );
+}
 
 class DefaultTabControllerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         // The number of tabs / content sections we need to display
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(tabs: [
               Tab(icon: Icon(Icons.search)),
-              Tab(icon: Icon(Icons.filter_list))
+              Tab(icon: Icon(Icons.filter_list)),
+              Tab(icon: Icon(Icons.favorite))
             ]),
             title: Text(AdvisorLocalizations.of(context).title),
           ),
           body: TabBarView(
-              children: [LocationsSearchBar(), LocationsSearchBarFilter()]),
+              children: [LocationsSearchBar(), LocationsSearchBarFilter(), Favorites()]),
         ));
   }
 }
@@ -45,9 +59,4 @@ class MyApp extends StatelessWidget {
       home: DefaultTabControllerApp(),
     );
   }
-}
-
-void main() {
-
-  runApp(MyApp());
 }
