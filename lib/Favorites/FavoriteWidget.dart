@@ -36,10 +36,6 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
     });
   }
 
-  void onPressed(Command ){
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(

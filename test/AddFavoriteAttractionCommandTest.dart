@@ -14,7 +14,7 @@ void main() {
     await database.close();
   });
   
-  test('new attraction is added', () async {
+  test('Attraction should be added', () async {
     //arrange
     final id = 1;
     final model = AttractionModel (
