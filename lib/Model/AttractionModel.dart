@@ -4,7 +4,7 @@ import 'package:touristadvisor/DetailView/AttractionDetails.dart';
 import 'package:touristadvisor/Model/LocationModel.dart';
 
 import 'ILocationModel.dart';
-
+import '../Locale/I18n.dart';
 import 'dart:ffi';
 import 'package:touristadvisor/Model/PhotoModel.dart';
 
@@ -81,8 +81,8 @@ class AttractionModel extends LocationModel{
   goToDetailedView(BuildContext context, int locationId) {
     //TODO: Get a specific object from API or cache
     final AttractionModel attractionModel = new AttractionModel.example();
-
+    String locale = AdvisorLocalizations.of(context).locale;
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AttractionDetails(locationId)));
+        MaterialPageRoute(builder: (context) => AttractionDetails(locationId, locale)));
   }
 }

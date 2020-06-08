@@ -9,32 +9,34 @@ import 'package:url_launcher/url_launcher.dart';
 // ignore: must_be_immutable
 class AttractionDetails extends StatefulWidget {
   int locationId;
+  String locale;
 
-  AttractionDetails(int locationId) {
+  AttractionDetails(int locationId, String locale) {
     this.locationId = locationId;
-
+    this.locale = locale;
   }
 
   @override
-  AttractionDetailsState createState() => AttractionDetailsState(locationId);
+  AttractionDetailsState createState() => AttractionDetailsState(locationId, locale);
 }
 
 class AttractionDetailsState extends State<AttractionDetails> {
   AttractionModel attraction = null;
 
-  AttractionDetailsState(int locationId) {
+  AttractionDetailsState(int locationId, String locale) {
     super.initState();
-    Locale myLocale = Localizations.localeOf(context);
-    print(myLocale.languageCode);
+//    Locale myLocale = Localizations.localeOf(context);
+//    print(myLocale.languageCode);
 
-    getAttraction(locationId);
+    getAttraction(locationId, locale);
   }
 
-  Future<void> getAttraction(int locationId) async{
+  Future<void> getAttraction(int locationId, String locale) async{
 
 //    Locale myLocale = Localizations.localeOf(context);
 //    print(myLocale.languageCode);
-    attraction = await fetchAttractions(locationId, "en_US");
+//    attraction = await fetchAttractions(locationId, "en_US");
+    attraction = await fetchAttractions(locationId, locale);
     setState((){
 //      attraction = value as Future<AttractionModel>;
     });

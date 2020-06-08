@@ -17,7 +17,8 @@ Future<List<LocationModel>> fetchLocations(String query, List<LocationType> sele
     "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
     "x-rapidapi-key": APIKey
   });
-
+  print(response.body);
+  print(APIKey);
   Map map = Map();
   map['body'] = response.body;
   map['selectedLocations'] = selectedLocation;

@@ -179,4 +179,13 @@ class AdvisorLocalizations {
       locale: localeName,
     );
   }
+
+  String get locale {
+    return Intl.message(
+      'en_US',
+      name: 'locale',
+      desc: 'locale',
+      locale: localeName,
+    );
+  }
 }

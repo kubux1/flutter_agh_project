@@ -15,6 +15,7 @@ import 'package:touristadvisor/Networking/HotelNetworking.dart';
 import 'AirportModel.dart';
 import 'HotelModel.dart';
 import 'ILocationModel.dart';
+import '../Locale/I18n.dart';
 
 class CategoryModel {
   final String key;
@@ -60,6 +61,7 @@ class LocationModel implements ILocationModel {
   }
 
   showDetails(LocationType locationType, int locationId, BuildContext context) async {
+    String locale = AdvisorLocalizations.of(context).attractions;
     switch (locationType) {
       case LocationType.attraction:
         {
@@ -68,7 +70,7 @@ class LocationModel implements ILocationModel {
           //    Navigator.push(context,
           //        MaterialPageRoute(builder: (context) => AirportDetails(airportModel)));
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AttractionDetails(locationId)));
+              MaterialPageRoute(builder: (context) => AttractionDetails(locationId, locale)));
           print("pokazujemy attraction");
         }
         break;

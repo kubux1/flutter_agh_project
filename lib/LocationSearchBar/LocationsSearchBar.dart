@@ -21,6 +21,7 @@ class LocationsSearchBar extends StatelessWidget {
   }
 
   onLocationTap(LocationModel location, BuildContext context) {
+    print(AdvisorLocalizations.of(context).locale);
     location.showDetails(location.locationType, location.id, context);
   }
 
@@ -44,7 +45,7 @@ class LocationsSearchBar extends StatelessWidget {
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SearchBar<LocationModel>(
-          hintText: AdvisorLocalizations.of(context).locationsSearchBarHintText,
+//          hintText: AdvisorLocalizations.of(context).locationsSearchBarHintText,
           onSearch: search,
           onItemFound: (LocationModel location, int index) {
             return ListTile(

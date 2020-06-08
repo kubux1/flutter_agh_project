@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-05-02T17:45:20.572185",
+  "@@last_modified": "2020-06-08T00:17:47.779211",
   "title": "Location Advisor",
   "@title": {
     "description": "Title for the Demo application",
@@ -58,6 +58,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "currency": "USD",
+  "@currency": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "locale_string": "en_US",
+  "@locale_string": {
+    "type": "text",
+    "placeholders": {}
+  },
   "errorOccurred": "Error occurred : {error}",
   "@errorOccurred": {
     "description": "Print error message",
@@ -73,5 +83,23 @@
     "placeholders": {
       "rad": {}
     }
+  },
+  "rating": "Rating: ",
+  "@rating": {
+    "description": "rating",
+    "type": "text",
+    "placeholders": {}
+  },
+  "distance": "Distance: ",
+  "@distance": {
+    "description": "distance",
+    "type": "text",
+    "placeholders": {}
+  },
+  "locale": "en_US",
+  "@locale": {
+    "description": "locale",
+    "type": "text",
+    "placeholders": {}
   }
 }

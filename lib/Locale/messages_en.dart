@@ -19,30 +19,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(error) => "Error occurred : ${error}";
-
-  static m1(rad) => "Radius ${rad} km";
-
   final messages = _notInlinedMessages(_notInlinedMessages);
+  static _notInlinedMessages(_) => <String, Function> {
 
-  static _notInlinedMessages(_) => <String, Function>{
-        "airports": MessageLookupByLibrary.simpleMessage("Airports"),
-        "attractionDescription": MessageLookupByLibrary.simpleMessage(
-            "Used over the centuries as a coronation church for the Hungarian kings, the slender and graceful architecture of this beautiful church dominates the main square of the Castle area."),
-        "attractionName":
-            MessageLookupByLibrary.simpleMessage("Matthias Church"),
-        "attractions": MessageLookupByLibrary.simpleMessage("Attractions"),
-        "errorOccurred": m0,
-        "hotels": MessageLookupByLibrary.simpleMessage("Hotels"),
-        "locationsSearchBarHintText": MessageLookupByLibrary.simpleMessage(
-            "Name of cities, districts, places, etc…"),
-        "noResultsFound":
-            MessageLookupByLibrary.simpleMessage("No results found"),
-        "radius": m1,
-        "restaurants": MessageLookupByLibrary.simpleMessage("Restaurants"),
-        "searching": MessageLookupByLibrary.simpleMessage("Searching..."),
-        "title": MessageLookupByLibrary.simpleMessage("Location Advisor"),
-        "distance": MessageLookupByLibrary.simpleMessage("Distance: "),
-        "rating": MessageLookupByLibrary.simpleMessage("Rating: ")
-      };
+  };
 }

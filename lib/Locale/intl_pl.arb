@@ -24,5 +24,7 @@
 	"radius": "Promień {rad} km",
 	"searching": "Wyszukiwanie...",
 	"attractionDescription": "Używana przez wieki jako kościół koronacyjny dla węgierskich królów, smukła i pełna wdzięku architektura tego pięknego kościoła dominuje na głównym placu Zamku.",
-	"attractionName": "Kościół Macieja"
+	"attractionName": "Kościół Macieja",
+    "locale_string": "pl_PL",
+	"locale": "pl_PL"
 }
