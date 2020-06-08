@@ -24,8 +24,8 @@ class AttractionDetailsState extends State<AttractionDetails> {
 
   AttractionDetailsState(int locationId) {
     super.initState();
-    Locale myLocale = Localizations.localeOf(context);
-    print(myLocale.languageCode);
+    //Locale myLocale = Localizations.localeOf(context);
+    //print(myLocale.languageCode);
 
     getAttraction(locationId);
   }
